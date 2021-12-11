@@ -30,8 +30,8 @@
 #          starttls:
 #            enable: true
 
-server:
-  port: 9876
+#server:
+#  port: 9876
 
 spring:
   datasource:

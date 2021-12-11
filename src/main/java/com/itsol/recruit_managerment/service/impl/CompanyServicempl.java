@@ -5,6 +5,7 @@ import com.itsol.recruit_managerment.repositories.CompanyRepo;
 import com.itsol.recruit_managerment.service.CompanyService;
 import com.itsol.recruit_managerment.vm.CompanyVM;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import java.util.List;
 
 @Service
 @Transactional
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CompanyServicempl implements CompanyService {
 
     private CompanyRepo companyRepo;

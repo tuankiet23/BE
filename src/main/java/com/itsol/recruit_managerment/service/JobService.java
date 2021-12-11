@@ -1,6 +1,7 @@
 package com.itsol.recruit_managerment.service;
 
 import com.itsol.recruit_managerment.model.Job;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
