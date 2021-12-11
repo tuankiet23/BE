@@ -1,8 +1,10 @@
-package com.itsol.recruit_managerment.service;
+package com.itsol.recruit_managerment.service.impl;
 
 import com.itsol.recruit_managerment.model.Job;
 
 import com.itsol.recruit_managerment.repositories.JobRepo;
+import com.itsol.recruit_managerment.service.JobService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -10,9 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class JobServiceimpl implements JobService{
+@AllArgsConstructor
+public class JobServiceimpl implements JobService {
 
-    @Autowired
     JobRepo jobRepo;
     
     @Override

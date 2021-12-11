@@ -5,7 +5,9 @@ import com.itsol.recruit_managerment.model.Job;
 import java.util.List;
 
 public interface JobService {
+
     List<Job> getAllJob();
+
     Job getJobById(Long id);
 
     List<Job> getListNewJobs(Integer numberDate, Integer page, Integer size);

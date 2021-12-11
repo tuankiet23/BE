@@ -4,22 +4,18 @@ package com.itsol.recruit_managerment.controller;
 import com.itsol.recruit_managerment.dto.PasswordDTO;
 import com.itsol.recruit_managerment.email.EmailServiceImpl;
 import com.itsol.recruit_managerment.model.OTP;
-import com.itsol.recruit_managerment.model.TokenAuthen;
 import com.itsol.recruit_managerment.model.User;
-import com.itsol.recruit_managerment.service.ProfilesServiceimpl;
-import com.itsol.recruit_managerment.service.UserServiceimpl;
+import com.itsol.recruit_managerment.service.impl.ProfilesServiceimpl;
+import com.itsol.recruit_managerment.service.impl.UserServiceimpl;
 import com.itsol.recruit_managerment.vm.UserVM;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
 
 import javax.validation.Valid;
-import java.nio.file.attribute.UserPrincipal;
 import java.util.List;
 
 @RestController

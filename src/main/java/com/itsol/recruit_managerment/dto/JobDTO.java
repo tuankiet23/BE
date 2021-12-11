@@ -1,9 +1,5 @@
 package com.itsol.recruit_managerment.dto;
 
-import com.itsol.recruit_managerment.model.Method_work;
-
-import javax.persistence.Column;
-import javax.persistence.OneToOne;
 import java.util.Date;
 
 public class JobDTO {

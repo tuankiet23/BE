@@ -15,17 +15,20 @@ import javax.persistence.*;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 
-public class Job_Position {
+public class JobPosition {
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "JOB_POSITION_SEQ")
     @SequenceGenerator(name = "JOB_POSITION_SEQ", sequenceName = "JOB_POSITION_SEQ", allocationSize = 1, initialValue = 1)
     Long id;
+
     @Column(name = "name")
     String name;
+
     @Column(name = "description")
     String description;
+
     @Column(name = "is_delete ")
     @Type(type = "org.hibernate.type.NumericBooleanType")
-    private boolean is_delete ;
+    private boolean isDelete ;
 }

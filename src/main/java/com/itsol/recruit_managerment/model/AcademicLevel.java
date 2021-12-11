@@ -1,5 +1,6 @@
 package com.itsol.recruit_managerment.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,23 +10,26 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
-@Entity(name = "Method_work")
+@Entity(name = "Academic_Level")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-
-public class Method_work {
+public class AcademicLevel {
     @Id
     @Column(nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "METHOD_WORK_SEQ")
-    @SequenceGenerator(name = "METHOD_WORK_SEQ", sequenceName = "METHOD_WORK_SEQ", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AL_SEQ")
+    @SequenceGenerator(name = "AL_SEQ", sequenceName = "AL_SEQ", allocationSize = 1, initialValue = 1)
     Long id;
-    @Column(name = "method_name")
-    String method_name;
-    @Column(name="description")
+
+    @Column(name = "academic_name", nullable = false)
+    String name;
+
+    @Column(name = "description", nullable = false)
     String description;
+
     @Column(name = "is_delete ")
     @Type(type = "org.hibernate.type.NumericBooleanType")
-    private boolean is_delete ;
+    private boolean isDelete;
+
 }

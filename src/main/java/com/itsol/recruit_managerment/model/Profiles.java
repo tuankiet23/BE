@@ -2,7 +2,6 @@ package com.itsol.recruit_managerment.model;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.Type;
@@ -28,24 +27,25 @@ public class Profiles implements Serializable {
     private User user;
 
     // truongbb - nullable là true thì không cần viết ra, đó là default ==> tự rà soát các class khác và bỏ đi
-    @Column(name = "skill", nullable = true)
+    @Column(name = "skill", nullable = false)
     private String Skill;
 
-    @Column(name = "years_experience", nullable = true)
-    private String years_experience;
+    @Column(name = "years_experience", nullable = false)
+    private String yearsExperience;
 
     @OneToOne
-    private Academic_Level academic_level ;
+    @JoinColumn(name ="academic_level_id")
+    private AcademicLevel academicLevel;
 
-    @Column(name = "desired_salary ", nullable = true)
-    String desired_salary ;
+    @Column(name = "desired_salary ", nullable = false)
+    String desiredSalary;
 
-    @Column(name = "desired_working_address  ", nullable = true)
-    String desired_working_address  ;
+    @Column(name = "desired_working_address  ", nullable = false)
+    String desiredWorkingAddress;
 
     @Column(name = "is_delete ")
     @Type(type = "org.hibernate.type.NumericBooleanType")
-    private boolean is_delete ;
+    private boolean isDelete;
 
     public Long getId() {
         return id;
@@ -71,43 +71,43 @@ public class Profiles implements Serializable {
         Skill = skill;
     }
 
-    public String getYears_experience() {
-        return years_experience;
+    public String getYearsExperience() {
+        return yearsExperience;
     }
 
-    public void setYears_experience(String years_experience) {
-        this.years_experience = years_experience;
+    public void setYearsExperience(String yearsExperience) {
+        this.yearsExperience = yearsExperience;
     }
 
-    public Academic_Level getAcademic_level() {
-        return academic_level;
+    public AcademicLevel getAcademicLevel() {
+        return academicLevel;
     }
 
-    public void setAcademic_level(Academic_Level academic_level) {
-        this.academic_level = academic_level;
+    public void setAcademicLevel(AcademicLevel academicLevel) {
+        this.academicLevel = academicLevel;
     }
 
-    public String getDesired_salary() {
-        return desired_salary;
+    public String getDesiredSalary() {
+        return desiredSalary;
     }
 
-    public void setDesired_salary(String desired_salary) {
-        this.desired_salary = desired_salary;
+    public void setDesiredSalary(String desiredSalary) {
+        this.desiredSalary = desiredSalary;
     }
 
-    public String getDesired_working_address() {
-        return desired_working_address;
+    public String getDesiredWorkingAddress() {
+        return desiredWorkingAddress;
     }
 
-    public void setDesired_working_address(String desired_working_address) {
-        this.desired_working_address = desired_working_address;
+    public void setDesiredWorkingAddress(String desiredWorkingAddress) {
+        this.desiredWorkingAddress = desiredWorkingAddress;
     }
 
-    public boolean isIs_delete() {
-        return is_delete;
+    public boolean isDelete() {
+        return isDelete;
     }
 
-    public void setIs_delete(boolean is_delete) {
-        this.is_delete = is_delete;
+    public void setDelete(boolean delete) {
+        isDelete = delete;
     }
 }

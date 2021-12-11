@@ -1,6 +1,5 @@
 package com.itsol.recruit_managerment.repositories;
 
-import com.itsol.recruit_managerment.model.Academic_Level;
 import com.itsol.recruit_managerment.model.Level_Rank;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -17,7 +16,7 @@ public interface LevelRankRepo extends JpaRepository<Level_Rank,Long> {
 
     @Transactional
     @Modifying
-    @Query(value=" update Level_Rank u set u.is_delete = 0 where u.id=:id")
+    @Query(value=" update Level_Rank u set u.isDelete = 0 where u.id=:id")
     void delete(@Param("id") Long id);
 
 }

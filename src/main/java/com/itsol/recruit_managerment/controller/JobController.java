@@ -1,29 +1,25 @@
 package com.itsol.recruit_managerment.controller;
 
-import com.itsol.recruit_managerment.model.Academic_Level;
 import com.itsol.recruit_managerment.model.Job;
-import com.itsol.recruit_managerment.model.Profiles;
-import com.itsol.recruit_managerment.service.JobServiceimpl;
-import com.sun.mail.iap.Response;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import com.itsol.recruit_managerment.service.JobService;
+import com.itsol.recruit_managerment.utils.CommonConst;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/user/job")
 @CrossOrigin(origins = "http://localhost:4200")
+@AllArgsConstructor
 public class JobController {
-    @Autowired
-    JobServiceimpl jobServiceimpl;
 
+    JobService jobService;
 
     @CrossOrigin
     @GetMapping("/{id}")
     public Job getJobDetail(@PathVariable("id") Long id) {
-        return jobServiceimpl.getJobById(id);
+        return jobService.getJobById(id);
     }
 
 
@@ -37,14 +33,14 @@ public class JobController {
     @GetMapping("/new-job/{numberdate}/{page}/{size}")
     public List<Job> getAllJobWithNewJob(@PathVariable("numberdate") Integer nunberDate, @PathVariable("page") Integer page
             , @PathVariable("size") Integer size) {
-        return jobServiceimpl.getListNewJobs(nunberDate, page, size);
+        return jobService.getListNewJobs(nunberDate, page, size);
     }
 
     @CrossOrigin
     @GetMapping("/hight-salary/{page}/{size}")
     public List<Job> getAllJobWithHigthSalary(@RequestParam() Integer salary, @PathVariable("page") Integer page
             , @PathVariable("size") Integer size) {
-        return jobServiceimpl.getListNewJobs(salary, page, size);
+        return jobService.getListNewJobs(salary, page, size);
     }
 
     /*
@@ -68,16 +64,16 @@ public class JobController {
          */
         // get job mowis tuyen
         if (modJob == 0) {
-            Integer nunberDate = 7;
-            return jobServiceimpl.getListNewJobs(nunberDate, page, size);
+            Integer nunberDate = CommonConst.DAY_OF_NEW_JOB;
+            return jobService.getListNewJobs(nunberDate, page, size);
         } else if (modJob == 1) {
             // get job luong cao
-            Integer salary = 18000000;
-            return jobServiceimpl.getListJobsHightSalary(salary, page, size);
+            Integer salary = CommonConst.HIGHT_SALARY;
+            return jobService.getListJobsHightSalary(salary, page, size);
         } else if (modJob == 2) {
             // get job deadline = 3 ngay
-            Integer deadLine = 3;
-            return jobServiceimpl.getListJobDeadLine(deadLine, page, size);
+            Integer deadLine = CommonConst.DAY_OF_NEW_JOB;
+            return jobService.getListJobDeadLine(deadLine, page, size);
         } else {
             return null;
         }
@@ -87,6 +83,6 @@ public class JobController {
     @CrossOrigin
     @GetMapping()
     public List<Job> getJob() {
-        return jobServiceimpl.getAllJob();
+        return jobService.getAllJob();
     }
 }

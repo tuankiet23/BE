@@ -21,11 +21,9 @@ public class JobRegister implements  Serializable {
     @Column(nullable = false)
     private Long id;
 
-
     @ManyToOne
     @JoinColumn(name = "job_id")
     private Job job;
-
 
     @ManyToOne
     @JoinColumn(name = "user_id")

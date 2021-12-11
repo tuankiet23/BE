@@ -1,12 +1,11 @@
 package com.itsol.recruit_managerment.security;
 import com.auth0.jwt.algorithms.Algorithm;
-import io.jsonwebtoken.*;
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itsol.recruit_managerment.dto.AuthenDTO;
 import com.itsol.recruit_managerment.model.OTP;
 import com.itsol.recruit_managerment.service.UserService;
-import com.itsol.recruit_managerment.service.UserServiceimpl;
+import com.itsol.recruit_managerment.service.impl.UserServiceimpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;

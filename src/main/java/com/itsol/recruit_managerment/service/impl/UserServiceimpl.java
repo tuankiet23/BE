@@ -1,4 +1,4 @@
-package com.itsol.recruit_managerment.service;
+package com.itsol.recruit_managerment.service.impl;
 
 
 import com.itsol.recruit_managerment.dto.PasswordDTO;
@@ -10,6 +10,7 @@ import com.itsol.recruit_managerment.model.User;
 import com.itsol.recruit_managerment.repositories.IUserRespository;
 import com.itsol.recruit_managerment.repositories.OTPRepo;
 import com.itsol.recruit_managerment.repositories.RoleRepo;
+import com.itsol.recruit_managerment.service.UserService;
 import com.itsol.recruit_managerment.utils.CommonConst;
 import com.itsol.recruit_managerment.vm.UserVM;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class UserServiceimpl implements UserService{
+public class UserServiceimpl implements UserService {
     @Autowired
     RoleRepo roleRepo;
     @Autowired

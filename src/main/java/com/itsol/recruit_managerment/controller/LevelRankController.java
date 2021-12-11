@@ -1,6 +1,6 @@
 package com.itsol.recruit_managerment.controller;
 import com.itsol.recruit_managerment.model.Level_Rank;
-import com.itsol.recruit_managerment.service.LevelRankimpl;
+import com.itsol.recruit_managerment.service.impl.LevelRankimpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,14 +1,17 @@
-package com.itsol.recruit_managerment.service;
+package com.itsol.recruit_managerment.service.impl;
 
 import com.itsol.recruit_managerment.model.Level_Rank;
 import com.itsol.recruit_managerment.repositories.LevelRankRepo;
+import com.itsol.recruit_managerment.service.Task;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class LevelRankimpl implements Task<Level_Rank>{
-    @Autowired
+@AllArgsConstructor
+public class LevelRankimpl implements Task<Level_Rank> {
+
     LevelRankRepo levelRankRepo;
 
     @Override

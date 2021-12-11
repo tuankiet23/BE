@@ -1,35 +1,39 @@
-package com.itsol.recruit_managerment.service;
+package com.itsol.recruit_managerment.service.impl;
 
-import com.itsol.recruit_managerment.model.Academic_Level;
+import com.itsol.recruit_managerment.model.AcademicLevel;
 import com.itsol.recruit_managerment.repositories.AcademiclevelRepo;
+import com.itsol.recruit_managerment.service.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
 @Service
-public class Academiclevelimpl implements Task<Academic_Level> {
+public class Academiclevelimpl implements Task<AcademicLevel> {
+
     @Autowired
     AcademiclevelRepo academiclevelRepo;
 
     @Override
-    public List<Academic_Level> getAll() {
+    public List<AcademicLevel> getAll() {
         return academiclevelRepo.findAll();
     }
 
     @Override
-    public Academic_Level save(Academic_Level academic_level) {
+    public AcademicLevel save(AcademicLevel academic_level) {
         return academiclevelRepo.save(academic_level);
     }
 
     @Override
-    public Academic_Level getById(Long id) {
+    public AcademicLevel getById(Long id) {
         return academiclevelRepo.getById(id);
     }
 
     @Override
     public void deleteById(Long id) {
-        academiclevelRepo.deleteAc(id);
+        academiclevelRepo.deleteById(id);
     }
 
 
