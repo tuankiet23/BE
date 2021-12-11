@@ -1,28 +1,33 @@
-package com.itsol.recruit_managerment.service;
+package com.itsol.recruit_managerment.service.impl;
 
-import com.itsol.recruit_managerment.model.Level_Rank;
+import com.itsol.recruit_managerment.model.LevelRank;
 import com.itsol.recruit_managerment.repositories.LevelRankRepo;
+import com.itsol.recruit_managerment.service.Task;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class LevelRankimpl implements Task<Level_Rank>{
+
+public class LevelRankimpl implements Task<LevelRank> {
+
     @Autowired
     LevelRankRepo levelRankRepo;
 
     @Override
-    public List<Level_Rank> getAll() {
+    public List<LevelRank> getAll() {
         return  levelRankRepo.findAll();
     }
 
     @Override
-    public Level_Rank save(Level_Rank level_rank) {
+    public LevelRank save(LevelRank level_rank) {
         return levelRankRepo.save(level_rank);
     }
 
     @Override
-    public Level_Rank getById(Long id) {
+    public LevelRank getById(Long id) {
         return levelRankRepo.getById(id);
     }
 

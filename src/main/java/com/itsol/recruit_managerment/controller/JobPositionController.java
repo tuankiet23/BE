@@ -1,9 +1,8 @@
 package com.itsol.recruit_managerment.controller;
 
-import com.itsol.recruit_managerment.model.Academic_Level;
-import com.itsol.recruit_managerment.model.Job_Position;
-import com.itsol.recruit_managerment.service.JobPositionimpl;
-import com.itsol.recruit_managerment.service.JobServiceimpl;
+import com.itsol.recruit_managerment.model.JobPosition;
+import com.itsol.recruit_managerment.service.impl.JobPositionimpl;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,16 +12,18 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/user/jobpposition")
+@AllArgsConstructor
 public class JobPositionController {
-    @Autowired
+
     JobPositionimpl jobPositionimpl;
+
     @GetMapping()
-    public List<Job_Position> getJobPosition(){
+    public List<JobPosition> getJobPosition(){
         return jobPositionimpl.getAll();
     }
 
     @PostMapping()
-    public ResponseEntity<Object> add(@Valid @RequestBody Job_Position job_position) {
+    public ResponseEntity<Object> add(@Valid @RequestBody JobPosition job_position) {
         try {
 
             jobPositionimpl.save(job_position);
@@ -35,7 +36,7 @@ public class JobPositionController {
     }
 
     @GetMapping("/{id}")
-    public Job_Position getJobPositionById( @PathVariable Long id){
+    public JobPosition getJobPositionById(@PathVariable Long id){
 
         return jobPositionimpl.getById(id);
     }

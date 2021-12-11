@@ -20,9 +20,9 @@ public class Role {
     @Column(name = "role_code", nullable = false)
     private String roleCode;
 
-    @Column(name = "description")
-    private String description;
-
     @Column(name = "name")
     private String name;
+
+    @Column(name = "description")
+    private String description;
 }

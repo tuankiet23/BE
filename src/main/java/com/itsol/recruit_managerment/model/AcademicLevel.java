@@ -15,7 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Academic_Level {
+public class AcademicLevel {
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AL_SEQ")
@@ -23,14 +23,13 @@ public class Academic_Level {
     Long id;
 
     @Column(name = "academic_name", nullable = false)
-    String academic_name;
+    String name;
 
     @Column(name = "description", nullable = false)
     String description;
 
     @Column(name = "is_delete ")
-    @JsonIgnore
     @Type(type = "org.hibernate.type.NumericBooleanType")
-    private boolean is_delete ;
+    private boolean isDelete;
 
 }

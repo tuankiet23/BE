@@ -1,7 +1,7 @@
 package com.itsol.recruit_managerment.controller;
 
 import com.itsol.recruit_managerment.model.Company;
-import com.itsol.recruit_managerment.service.CompanyServicempl;
+import com.itsol.recruit_managerment.service.impl.CompanyServicempl;
 import com.itsol.recruit_managerment.vm.CompanyVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

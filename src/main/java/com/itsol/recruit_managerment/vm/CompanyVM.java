@@ -40,6 +40,6 @@ public class CompanyVM {
     @NotEmpty(message = " ảnh bìa  không được để trống")
     String backdrop_img;
     @NotEmpty(message = "   không được để trống")
-    Integer is_delete;
+    Boolean is_delete;
 
 }

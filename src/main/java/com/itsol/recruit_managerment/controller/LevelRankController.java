@@ -1,6 +1,6 @@
 package com.itsol.recruit_managerment.controller;
-import com.itsol.recruit_managerment.model.Level_Rank;
-import com.itsol.recruit_managerment.service.LevelRankimpl;
+import com.itsol.recruit_managerment.model.LevelRank;
+import com.itsol.recruit_managerment.service.impl.LevelRankimpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +14,12 @@ public class LevelRankController {
     @Autowired
     LevelRankimpl levelRankimpl;
     @GetMapping()
-    public List<Level_Rank> getLevelRank(){
+    public List<LevelRank> getLevelRank(){
         return levelRankimpl.getAll();
     }
 
     @PostMapping()
-    public ResponseEntity<Object> add(@Valid @RequestBody Level_Rank level_rank) {
+    public ResponseEntity<Object> add(@Valid @RequestBody LevelRank level_rank) {
         try {
 
             levelRankimpl.save(level_rank);
@@ -32,7 +32,7 @@ public class LevelRankController {
     }
 
     @GetMapping("/{id}")
-    public Level_Rank getById( @PathVariable Long id){
+    public LevelRank getById(@PathVariable Long id){
 
         return levelRankimpl.getById(id);
     }

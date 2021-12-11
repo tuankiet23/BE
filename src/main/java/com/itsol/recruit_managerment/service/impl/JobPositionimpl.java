@@ -1,28 +1,31 @@
-package com.itsol.recruit_managerment.service;
+package com.itsol.recruit_managerment.service.impl;
 
-import com.itsol.recruit_managerment.model.Job;
-import com.itsol.recruit_managerment.model.Job_Position;
+import com.itsol.recruit_managerment.model.JobPosition;
 import com.itsol.recruit_managerment.repositories.JobPositionRepo;
+import com.itsol.recruit_managerment.service.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-@Service
-public class JobPositionimpl implements Task<Job_Position>{
-    @Autowired
+
+@Component
+public class JobPositionimpl implements Task<JobPosition> {
+
     JobPositionRepo jobPositionRepo;
+
     @Override
-    public List<Job_Position> getAll() {
+    public List<JobPosition> getAll() {
         return jobPositionRepo.findAll();
     }
 
     @Override
-    public Job_Position save(Job_Position job_position) {
+    public JobPosition save(JobPosition job_position) {
         return jobPositionRepo.save(job_position);
     }
 
     @Override
-    public Job_Position getById(Long id) {
+    public JobPosition getById(Long id) {
         return jobPositionRepo.getById(id);
     }
 

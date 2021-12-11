@@ -1,8 +1,9 @@
-package com.itsol.recruit_managerment.service;
+package com.itsol.recruit_managerment.service.impl;
 
 import com.itsol.recruit_managerment.model.Profiles;
 import com.itsol.recruit_managerment.model.User;
 import com.itsol.recruit_managerment.repositories.ProfilesRepo;
+import com.itsol.recruit_managerment.service.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

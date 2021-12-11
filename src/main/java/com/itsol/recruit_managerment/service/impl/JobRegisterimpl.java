@@ -1,10 +1,12 @@
-package com.itsol.recruit_managerment.service;
+package com.itsol.recruit_managerment.service.impl;
 
-import com.itsol.recruit_managerment.model.Job;
 import com.itsol.recruit_managerment.model.JobRegister;
 import com.itsol.recruit_managerment.repositories.JobRegisterRepo;
 import com.itsol.recruit_managerment.repositories.JobRepo;
-import com.itsol.recruit_managerment.vm.JobRegisterVM;
+import com.itsol.recruit_managerment.service.JobRegisterService;
+import com.itsol.recruit_managerment.service.Task;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,8 +16,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class JobRegisterimpl implements Task<JobRegister>, JobRegisterService{
-    @Autowired
+@RequiredArgsConstructor
+public class JobRegisterimpl implements Task<JobRegister>, JobRegisterService {
+
     JobRegisterRepo jobRegisterRepo;
 
     @Autowired

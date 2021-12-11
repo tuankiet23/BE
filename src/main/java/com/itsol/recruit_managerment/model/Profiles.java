@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity(name = "Profiles")
-
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -19,95 +19,34 @@ import java.io.Serializable;
 public class Profiles implements Serializable {
 
     @Id
-    private Long id;
-
-
+    @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PROFILES_SEQ")
+    @SequenceGenerator(name = "PROFILES_SEQ", sequenceName = "PROFILES_SEQ", allocationSize = 1, initialValue = 1)
+    Long id;
 
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)
     private User user;
 
     // truongbb - nullable là true thì không cần viết ra, đó là default ==> tự rà soát các class khác và bỏ đi
-    @Column(name = "skill", nullable = true)
+    @Column(name = "skill", nullable = false)
     private String Skill;
 
-    @Column(name = "years_experience", nullable = true)
-    private String years_experience;
+    @Column(name = "years_experience", nullable = false)
+    private Integer yearsExperience;
 
     @OneToOne
-    private Academic_Level academic_level ;
+    @JoinColumn(name ="academic_level_id")
+    private AcademicLevel academicLevel;
 
-    @Column(name = "desired_salary ", nullable = true)
-    String desired_salary ;
+    @Column(name = "desired_salary ", nullable = false)
+    String desiredSalary;
 
-    @Column(name = "desired_working_address  ", nullable = true)
-    String desired_working_address  ;
+    @Column(name = "desired_working_address  ", nullable = false)
+    String desiredWorkingAddress;
 
     @Column(name = "is_delete ")
     @Type(type = "org.hibernate.type.NumericBooleanType")
-    private boolean is_delete ;
+    private boolean isDelete;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getSkill() {
-        return Skill;
-    }
-
-    public void setSkill(String skill) {
-        Skill = skill;
-    }
-
-    public String getYears_experience() {
-        return years_experience;
-    }
-
-    public void setYears_experience(String years_experience) {
-        this.years_experience = years_experience;
-    }
-
-    public Academic_Level getAcademic_level() {
-        return academic_level;
-    }
-
-    public void setAcademic_level(Academic_Level academic_level) {
-        this.academic_level = academic_level;
-    }
-
-    public String getDesired_salary() {
-        return desired_salary;
-    }
-
-    public void setDesired_salary(String desired_salary) {
-        this.desired_salary = desired_salary;
-    }
-
-    public String getDesired_working_address() {
-        return desired_working_address;
-    }
-
-    public void setDesired_working_address(String desired_working_address) {
-        this.desired_working_address = desired_working_address;
-    }
-
-    public boolean isIs_delete() {
-        return is_delete;
-    }
-
-    public void setIs_delete(boolean is_delete) {
-        this.is_delete = is_delete;
-    }
 }

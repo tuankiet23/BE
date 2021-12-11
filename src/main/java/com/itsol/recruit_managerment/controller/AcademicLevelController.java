@@ -1,8 +1,9 @@
 package com.itsol.recruit_managerment.controller;
 
 
-import com.itsol.recruit_managerment.model.Academic_Level;
-import com.itsol.recruit_managerment.service.Academiclevelimpl;
+import com.itsol.recruit_managerment.model.AcademicLevel;
+import com.itsol.recruit_managerment.service.impl.Academiclevelimpl;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +18,12 @@ public class AcademicLevelController {
     Academiclevelimpl academiclevelimpl;
 
     @GetMapping()
-    public List<Academic_Level> getAcademic() {
+    public List<AcademicLevel> getAcademic() {
         return academiclevelimpl.getAll();
     }
 
     @PostMapping()
-    public ResponseEntity<Object> add(@Valid @RequestBody Academic_Level academic_level) {
+    public ResponseEntity<Object> add(@Valid @RequestBody AcademicLevel academic_level) {
         try {
             academiclevelimpl.save(academic_level);
             return ResponseEntity.ok().body(academic_level);
@@ -33,7 +34,7 @@ public class AcademicLevelController {
     }
 
     @GetMapping("/{id}")
-    public Academic_Level getAcademicById(@PathVariable Long id) {
+    public AcademicLevel getAcademicById(@PathVariable Long id) {
         return academiclevelimpl.getById(id);
     }
 
