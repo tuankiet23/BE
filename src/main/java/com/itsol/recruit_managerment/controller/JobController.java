@@ -60,6 +60,12 @@ public class JobController {
             @RequestParam("modjob") Integer modJob
             , @PathVariable("page") Integer page
             , @PathVariable("size") Integer size) {
+
+        /**
+         * truongbb - hàm này đang có vấn đề:
+         *      - 3 hàm này có thể viết thành 1 hàm duy nhất
+         *      - những con số điều kiện search như nunberDate, salary, deadLine ==> đưa vào constant hoặc config
+         */
         // get job mowis tuyen
         if (modJob == 0) {
             Integer nunberDate = 7;

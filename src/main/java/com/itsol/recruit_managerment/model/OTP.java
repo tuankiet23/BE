@@ -9,6 +9,7 @@ import java.util.Random;
 @Entity
 @Data
 public class OTP {
+    // truongbb - đưa vào constant
     private final static Long EXPIRED_TIME = 5 * 60 * 1000L;
 
     @Id

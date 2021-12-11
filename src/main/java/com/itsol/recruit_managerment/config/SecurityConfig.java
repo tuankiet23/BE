@@ -7,7 +7,6 @@ import com.itsol.recruit_managerment.service.UserServiceimpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,10 +23,10 @@ import org.springframework.security.web.authentication.logout.HttpStatusReturnin
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    @Autowired
-    private final  UserDetailsService userDetailsService;
+    //    @Autowired
+    private final UserDetailsService userDetailsService;
     @Autowired
-    private  PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
     @Autowired
     UserServiceimpl appUserService;
 
@@ -48,8 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilter(new AuthenFilter(authenticationManager(), appUserService));
         http.addFilterBefore(new AuthorFilter(), UsernamePasswordAuthenticationFilter.class);
         http.formLogin()
-                        .loginProcessingUrl("/login")
-                                .isCustomLoginPage();
+                .loginProcessingUrl("/login")
+                .isCustomLoginPage();
         http.logout()
                 .logoutUrl("/logout")
                 .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK));

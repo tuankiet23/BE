@@ -26,6 +26,7 @@ public class CompanyServicempl implements CompanyService{
     public int update(CompanyVM companyVM , Long id){
         Company company = companyRepo.getCompanyById(id);
         try {
+            // truongbb - tách việc tạo object company ra 1 hàm riêng, dùng builder, không dùng liên tục các hàm set
             company.setId(id);
             company.setName(companyVM.getName());
             company.setEmail(companyVM.getEmail());

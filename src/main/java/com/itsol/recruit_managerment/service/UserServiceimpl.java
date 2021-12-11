@@ -238,6 +238,7 @@ public class UserServiceimpl implements UserService{
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         User user = userRepo.findByUserName(userName);
+        // truongbb - viết thành class util cho việc check null object hoặc string hoặc collection (vì có rất nhiều chỗ check null như này)
         if(user == null){
             throw new UsernameNotFoundException("Cannot find this user");
         }

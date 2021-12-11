@@ -29,7 +29,7 @@ public class AuthorFilter extends OncePerRequestFilter {
         if(authorHeader != null && authorHeader.startsWith("Bearer ")){
             try {
                 String token =authorHeader.substring("Bearer ".length());
-                Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+                Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());// truongbb - secret key không nên fix cứng như này, nên mã hóa 1 lớp và để ở config
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT =verifier.verify(token);
                 String username = decodedJWT.getSubject();

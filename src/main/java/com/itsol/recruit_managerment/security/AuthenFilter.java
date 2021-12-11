@@ -61,10 +61,10 @@ public class AuthenFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         User userDetails = (User) authResult.getPrincipal();
-        com.auth0.jwt.algorithms.Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+        com.auth0.jwt.algorithms.Algorithm algorithm = Algorithm.HMAC256("secret".getBytes()); // truongbb - secret key không nên fix cứng như này, nên mã hóa 1 lớp và để ở config
         String token = JWT.create()
                 .withSubject(userDetails.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 20 * 60 * 1000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 20 * 60 * 1000)) // truongbb - nên để ở config yml
                 .withClaim("roles", userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
         Map<String, String> tokenObj = new HashMap<>();
