@@ -34,12 +34,14 @@ server:
   port: 9876
 
 spring:
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
     url: jdbc:oracle:thin:@localhost:1521:xe
     username: ITSOLDEMO
     password: 123456
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
@@ -56,6 +58,14 @@ spring:
           auth: true
           starttls:
             enable: true
+logging:
+  level:
+    root: info
+  file:
+    name: ./log.txt
+  pattern:
+    console: '%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n'
+    file: '%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n'
 
 application:
   active-account:
