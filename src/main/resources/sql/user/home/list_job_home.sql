@@ -1,3 +1,1 @@
-select *
-from Jobs
-where 1 = 1
+select * from Jobs
