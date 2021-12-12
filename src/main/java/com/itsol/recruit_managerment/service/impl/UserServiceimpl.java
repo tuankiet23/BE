@@ -14,6 +14,7 @@ import com.itsol.recruit_managerment.service.UserService;
 import com.itsol.recruit_managerment.utils.CommonConst;
 import com.itsol.recruit_managerment.vm.UserVM;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @Transactional
@@ -246,5 +248,24 @@ public class UserServiceimpl implements UserService {
         List<SimpleGrantedAuthority> authorities =new ArrayList<>();
         user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getName())));
         return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), true, true, true, user.isActive(), authorities);
+    }
+    @Override
+    public Object sendFogotPasswordMail(String email) {
+        User user = userRepo.findByEmail(email);
+        if (user == null) {
+            throw new UsernameNotFoundException("Email không tồn tại trong hệ thống");
+        }
+        Random random = new Random();
+
+        String password = random.ints(97, 123)
+                .limit(6)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+        user.setPassword(passwordEncoder.encode(password));
+        userRepo.save(user);
+        emailService.sendSimpleMessage(user.getEmail(),
+                "Link FogotPassword",
+                "Mật khẩu mới của bạn là: "+ password);
+        return ResponseEntity.ok().body("check token in mail");
     }
 }

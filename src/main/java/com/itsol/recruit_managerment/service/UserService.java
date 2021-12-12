@@ -39,4 +39,6 @@ public interface UserService extends UserDetailsService {
     void changePassword(String password, User user);
 
     User loadUserFromContext();
+
+    Object sendFogotPasswordMail(String email);
 }

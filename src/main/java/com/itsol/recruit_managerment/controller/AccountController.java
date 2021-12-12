@@ -9,10 +9,12 @@ import com.itsol.recruit_managerment.model.Role;
 import com.itsol.recruit_managerment.model.User;
 import com.itsol.recruit_managerment.repositories.RoleRepo;
 import com.itsol.recruit_managerment.service.UserService;
+import com.itsol.recruit_managerment.service.impl.UserServiceimpl;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,11 +30,15 @@ import java.util.Set;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AccountController {
-
+    @Autowired
     RoleRepo roleRepo;
+    @Autowired
     UserService userService;
+    @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
     EmailServiceImpl emailService;
+    @Autowired
     AccountActivationConfig accountActivationConfig;
 
     @PostMapping("/signup")
@@ -85,8 +91,11 @@ public class AccountController {
         return User.builder()
                 .fullName(userSignupDTO.getFullName())
                 .email(userSignupDTO.getEmail())
-
-
+                .phoneNumber(userSignupDTO.getPhoneNumber())
+                .homeTown(userSignupDTO.getHomeTown())
+                .gender(userSignupDTO.getGender())
+                .userName(userSignupDTO.getUserName())
+                .password(userSignupDTO.getPassword())
                 .build();
 //        User user = new User();
 //        user.setFullName(userSignupDTO.getFullName());

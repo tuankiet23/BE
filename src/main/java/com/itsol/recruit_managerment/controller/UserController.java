@@ -7,6 +7,7 @@ import com.itsol.recruit_managerment.model.OTP;
 import com.itsol.recruit_managerment.model.User;
 import com.itsol.recruit_managerment.service.impl.ProfilesServiceimpl;
 import com.itsol.recruit_managerment.service.impl.UserServiceimpl;
+import com.itsol.recruit_managerment.vm.FogotPasswordVM;
 import com.itsol.recruit_managerment.vm.UserVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -113,6 +114,10 @@ public class UserController {
             }catch (RuntimeException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+    @PutMapping("/fogotpass")
+    public ResponseEntity<String> fogotPassword(@RequestBody FogotPasswordVM fogotPasswordVM){
+        return (ResponseEntity<String>) userService.sendFogotPasswordMail(fogotPasswordVM.getEmail());
     }
 
 //    @PostMapping("/login")
