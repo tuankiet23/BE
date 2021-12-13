@@ -2,6 +2,7 @@ package com.itsol.recruit_managerment.controller;
 
 
 import com.itsol.recruit_managerment.dto.PasswordDTO;
+import com.itsol.recruit_managerment.dto.UserSignupDTO;
 import com.itsol.recruit_managerment.email.EmailServiceImpl;
 import com.itsol.recruit_managerment.model.OTP;
 import com.itsol.recruit_managerment.model.User;
@@ -42,7 +43,6 @@ public class UserController {
             return  ResponseEntity.badRequest().body(result.getAllErrors());
         }
         try {
-            userService.validateUser(userVM);
             userService.add(userVM);
 
             return  ResponseEntity.ok().body(userVM);
@@ -52,11 +52,10 @@ public class UserController {
         }
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@PathVariable Long id , @RequestBody UserVM userVM) {
+    public ResponseEntity<Object> update(@PathVariable Long id , @RequestBody UserSignupDTO userSignupDTO) {
         try {
-            userService.validateUser(userVM);
-            userService.update(userVM,id);
-            return  ResponseEntity.ok().body(userVM);
+            userService.update(userSignupDTO,id);
+            return  ResponseEntity.ok().body(userSignupDTO);
         }catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.badRequest().body("failed to update user");
@@ -120,18 +119,6 @@ public class UserController {
         return (ResponseEntity<String>) userService.sendFogotPasswordMail(fogotPasswordVM.getEmail());
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<?> login(@RequestBody User user) {
-//        UserPrincipal userPrincipal = userService.findByUsername(user.getUsername());
-//        if (null == user || !new BCryptPasswordEncoder().matches(user.getPassword(), userPrincipal.getPassword())) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("tài khoản hoặc mật khẩu không chính xác");
-//        }
-//        TokenAuthen token = new TokenAuthen();
-//        token.setToken(jwtUtil.generateToken(userPrincipal));
-//        token.setTokenExpDate(jwtUtil.generateExpirationDate());
-//        token.setCreatedBy(userPrincipal.getUserId());
-//        tokenService.createToken(token);
-//        return ResponseEntity.ok(token.getToken());
-//    }
+
 
 }

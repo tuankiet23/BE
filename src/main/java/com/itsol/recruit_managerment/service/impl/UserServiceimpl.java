@@ -2,6 +2,7 @@ package com.itsol.recruit_managerment.service.impl;
 
 
 import com.itsol.recruit_managerment.dto.PasswordDTO;
+import com.itsol.recruit_managerment.dto.UserSignupDTO;
 import com.itsol.recruit_managerment.email.EmailServiceImpl;
 import com.itsol.recruit_managerment.model.OTP;
 import com.itsol.recruit_managerment.model.Role;
@@ -58,11 +59,6 @@ public class UserServiceimpl implements UserService {
     public int add(UserVM userVM) {
         User newUser = new User();
         try {
-            boolean check = validateUser(userVM);
-            if (!check) {
-                System.out.println("........");
-                return 0;
-            }
             newUser.setGender(userVM.getGender());
             newUser.setEmail(userVM.getEmail());
             newUser.setHomeTown(userVM.getHomeTown());
@@ -83,29 +79,24 @@ public class UserServiceimpl implements UserService {
         }
     }
 
-    public boolean validateUser(UserVM userVM) {
-        return true;
-    }
 
-    public int update(UserVM userVM, Long id) {
+
+    public int update(UserSignupDTO userSignupDTO, Long id) {
         User newUser = new User();
         try {
-            boolean check = validateUser(userVM);
-            if (!check) {
-                System.out.println("........");
-                return 0;
-            }
+
             newUser.setId(id);
-            newUser.setGender(userVM.getGender());
-            newUser.setEmail(userVM.getEmail());
-            newUser.setHomeTown(userVM.getHomeTown());
-            newUser.setPhoneNumber(userVM.getPhoneNumber());
-            newUser.setFullName(userVM.getFullName());
-            newUser.setUserName(userVM.getUserName());
-            newUser.setPassword(userVM.getPassword());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            newUser.setGender(userSignupDTO.getGender());
+            newUser.setEmail(userSignupDTO.getEmail());
+            newUser.setHomeTown(userSignupDTO.getHomeTown());
+            newUser.setPhoneNumber(userSignupDTO.getPhoneNumber());
+            newUser.setFullName(userSignupDTO.getFullName());
+            newUser.setUserName(userSignupDTO.getUserName());
+            newUser.setPassword(userSignupDTO.getPassword());
+            newUser.setActive(true);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             try {
-                newUser.setBirthDay(sdf.parse(userVM.getBirthDay()));
+                newUser.setBirthDay(sdf.parse(userSignupDTO.getBirthDay()));
             } catch (java.text.ParseException e) {
                 e.printStackTrace();
             }
@@ -267,5 +258,22 @@ public class UserServiceimpl implements UserService {
                 "Link FogotPassword",
                 "Mật khẩu mới của bạn là: "+ password);
         return ResponseEntity.ok().body("check token in mail");
+    }
+    @Override
+    public User createUser(UserSignupDTO userSignupDTO) {
+        return User.builder()
+                .fullName(userSignupDTO.getFullName())
+                .email(userSignupDTO.getEmail())
+                .phoneNumber(userSignupDTO.getPhoneNumber())
+                .homeTown(userSignupDTO.getHomeTown())
+                .gender(userSignupDTO.getGender())
+                .userName(userSignupDTO.getUserName())
+                .password(userSignupDTO.getPassword())
+                .build();
+
+    }
+    @Override
+    public Object getAllJE(){
+        return   userRepo.getAllJE();
     }
 }

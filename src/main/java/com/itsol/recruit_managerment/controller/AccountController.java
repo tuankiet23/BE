@@ -40,14 +40,15 @@ public class AccountController {
     EmailServiceImpl emailService;
     @Autowired
     AccountActivationConfig accountActivationConfig;
-
+    @Autowired
+    UserServiceimpl userServiceimpl;
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody UserSignupDTO userSignupDTO) {
 
         Role role = roleRepo.findByName("ROLE_USER"); // truongbb - đưa vào constant
         // truongbb - role null thì sao?
         // không dùng set từng trường 1 như thế này ==> SOLUTION: dùng builder, tách riêng việc tạo object user ra 1 hàm
-        User user = createUser(userSignupDTO);
+        User user = userServiceimpl.createUser(userSignupDTO);
         if (ObjectUtils.isEmpty(user)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -87,25 +88,6 @@ public class AccountController {
         }
     }
 
-    private User createUser(UserSignupDTO userSignupDTO) {
-        return User.builder()
-                .fullName(userSignupDTO.getFullName())
-                .email(userSignupDTO.getEmail())
-                .phoneNumber(userSignupDTO.getPhoneNumber())
-                .homeTown(userSignupDTO.getHomeTown())
-                .gender(userSignupDTO.getGender())
-                .userName(userSignupDTO.getUserName())
-                .password(userSignupDTO.getPassword())
-                .build();
-//        User user = new User();
-//        user.setFullName(userSignupDTO.getFullName());
-//        user.setEmail(userSignupDTO.getEmail());
-//        user.setPhoneNumber(userSignupDTO.getPhoneNumber());
-//        user.setHomeTown(userSignupDTO.getHomeTown());
-//        user.setGender(userSignupDTO.getGender());
-//        user.setUserName(userSignupDTO.getUserName());
-//        user.setPassword(passwordEncoder.encode(userSignupDTO.getPassword()));
-//        return user;
-    }
+
 
 }
