@@ -28,7 +28,6 @@ public class Profiles implements Serializable {
     @JoinColumn(name = "user_id", unique = true)
     private User user;
 
-    // truongbb - nullable là true thì không cần viết ra, đó là default ==> tự rà soát các class khác và bỏ đi
     @Column(name = "skill", nullable = false)
     private String Skill;
 

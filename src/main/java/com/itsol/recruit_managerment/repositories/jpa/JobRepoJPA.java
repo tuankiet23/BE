@@ -1,4 +1,4 @@
-package com.itsol.recruit_managerment.repositories;
+package com.itsol.recruit_managerment.repositories.jpa;
 
 import com.itsol.recruit_managerment.model.Job;
 
@@ -19,7 +19,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @EnableJpaRepositories
-public interface JobRepo extends JpaRepository<Job,Long> {
+public interface JobRepoJPA extends JpaRepository<Job,Long> {
 
 
 /*

@@ -1,30 +1,51 @@
 package com.itsol.recruit_managerment.dto;
 
+import com.itsol.recruit_managerment.model.*;
+
+import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import java.util.Date;
 
 public class JobDTO {
+
     Long id;
 
-    String job_name;
+    String jobName;
 
+    JobPosition jobPosition;
 
-    Integer job_position_id;
-    Integer number_experience;
-    //    @Column(name = "method_work_id")
-    Integer method_work_id;
-//    private Method_work method_work;
-    String address_work;
-    Integer academic_level_id;
-    Integer level_id;
-    Integer qty_person;
-    Date due_date;
+    Integer numberExperience;
+
+    MethodWork method_work;
+
+    String addressWork;
+
+    AcademicLevel academicLevel ;
+
+    LevelRank levelRank ;
+
+    Integer qtyPerson;
+
+    Date dueDate;
+
+    Date startRecruitmentDate ;
+
     String skills;
+
     String description;
+
     String interrest;
+
     Integer salary;
-    Integer contact_id;
-    Integer job_status_id;
+
+    User contact;
+
+    StatusJob statusJob;
+
     Integer views;
-    Integer create_id;
-    Integer is_delete;
+
+    User creater;
+
+    Date createDate ;
 }
