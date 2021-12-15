@@ -2763,3 +2763,105 @@ Caused by: oracle.jdbc.OracleDatabaseException: ORA-01758: table must be empty t
 15-12-2021 13:39:31.366 [35m[SpringApplicationShutdownHook][0;39m [34mINFO [0;39m org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.destroy - Closing JPA EntityManagerFactory for persistence unit 'default'
 15-12-2021 13:39:31.438 [35m[SpringApplicationShutdownHook][0;39m [34mINFO [0;39m com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown initiated...
 15-12-2021 13:39:31.641 [35m[SpringApplicationShutdownHook][0;39m [34mINFO [0;39m com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown completed.
+15-12-2021 13:40:54.033 [35m[restartedMain][0;39m [34mINFO [0;39m com.itsol.recruit_managerment.RecruitManagermentApplication.logStarting - Starting RecruitManagermentApplication using Java 11.0.12 on giaphn with PID 4788 (F:\4.ITSOL\mockproject_nhomkiet\BE\target\classes started by GiapHN in F:\4.ITSOL\mockproject_nhomkiet\BE)
+15-12-2021 13:40:54.052 [35m[restartedMain][0;39m [34mINFO [0;39m com.itsol.recruit_managerment.RecruitManagermentApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+15-12-2021 13:40:54.744 [35m[restartedMain][0;39m [34mINFO [0;39m org.springframework.boot.devtools.restart.ChangeableUrls.logTo - The Class-Path manifest attribute in C:\Users\GiapHN\Desktop\ojdbc8-19.3.0.0.jar referenced one or more files that do not exist: file:/C:/Users/GiapHN/Desktop/oraclepki.jar
+15-12-2021 13:40:54.747 [35m[restartedMain][0;39m [34mINFO [0;39m org.springframework.boot.devtools.restart.ChangeableUrls.logTo - The Class-Path manifest attribute in C:\Users\GiapHN\.m2\repository\com\oracle\database\jdbc\ojdbc8\21.1.0.0\ojdbc8-21.1.0.0.jar referenced one or more files that do not exist: file:/C:/Users/GiapHN/.m2/repository/com/oracle/database/jdbc/ojdbc8/21.1.0.0/oraclepki.jar
+15-12-2021 13:40:54.752 [35m[restartedMain][0;39m [34mINFO [0;39m org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor.logTo - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+15-12-2021 13:40:54.754 [35m[restartedMain][0;39m [34mINFO [0;39m org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor.logTo - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+15-12-2021 13:41:06.504 [35m[restartedMain][0;39m [34mINFO [0;39m org.springframework.data.repository.config.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+15-12-2021 13:41:07.584 [35m[restartedMain][0;39m [34mINFO [0;39m org.springframework.data.repository.config.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 1005 ms. Found 11 JPA repository interfaces.
+15-12-2021 13:41:13.852 [35m[restartedMain][0;39m [34mINFO [0;39m org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize - Tomcat initialized with port(s): 9876 (http)
+15-12-2021 13:41:13.932 [35m[restartedMain][0;39m [34mINFO [0;39m org.apache.catalina.core.StandardService.log - Starting service [Tomcat]
+15-12-2021 13:41:13.937 [35m[restartedMain][0;39m [34mINFO [0;39m org.apache.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/9.0.54]
+15-12-2021 13:41:14.817 [35m[restartedMain][0;39m [34mINFO [0;39m org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/].log - Initializing Spring embedded WebApplicationContext
+15-12-2021 13:41:14.820 [35m[restartedMain][0;39m [34mINFO [0;39m org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 20052 ms
+15-12-2021 13:41:14.921 [35m[restartedMain][0;39m [34mINFO [0;39m com.itsol.recruit_managerment.config.SimpleCORSFilter.<init> - SimpleCORSFilter init
+15-12-2021 13:41:16.529 [35m[restartedMain][0;39m [34mINFO [0;39m org.hibernate.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [name: default]
+15-12-2021 13:41:17.040 [35m[restartedMain][0;39m [34mINFO [0;39m org.hibernate.Version.logVersion - HHH000412: Hibernate ORM core version 5.4.32.Final
+15-12-2021 13:41:18.249 [35m[restartedMain][0;39m [34mINFO [0;39m org.hibernate.annotations.common.Version.<clinit> - HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+15-12-2021 13:41:19.226 [35m[restartedMain][0;39m [34mINFO [0;39m com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+15-12-2021 13:41:19.253 [35m[restartedMain][0;39m [31mWARN [0;39m com.zaxxer.hikari.util.DriverDataSource.<init> - Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
+15-12-2021 13:41:21.497 [35m[restartedMain][0;39m [34mINFO [0;39m com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+15-12-2021 13:41:21.616 [35m[restartedMain][0;39m [34mINFO [0;39m org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.OracleDialect
+15-12-2021 13:41:21.688 [35m[restartedMain][0;39m [31mWARN [0;39m org.hibernate.dialect.Oracle9Dialect.<init> - HHH000063: The Oracle9Dialect dialect has been deprecated; use either Oracle9iDialect or Oracle10gDialect instead
+15-12-2021 13:41:21.705 [35m[restartedMain][0;39m [31mWARN [0;39m org.hibernate.dialect.OracleDialect.<init> - HHH000064: The OracleDialect dialect has been deprecated; use Oracle8iDialect instead
+15-12-2021 13:41:34.550 [35m[restartedMain][0;39m [31mWARN [0;39m org.hibernate.tool.schema.internal.ExceptionHandlerLoggedImpl.handleException - GenerationTarget encountered exception accepting command : Error executing DDL "
+    alter table profiles 
+       add years_experience number(10,0) not null" via JDBC Statement
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
+    alter table profiles 
+       add years_experience number(10,0) not null" via JDBC Statement
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:562)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:583)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.migrateTable(AbstractSchemaMigrator.java:297)
+	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:75)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:207)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:114)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:184)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:318)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:468)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1259)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1863)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1800)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1154)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:908)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1332)
+	at com.itsol.recruit_managerment.RecruitManagermentApplication.main(RecruitManagermentApplication.java:10)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: java.sql.SQLSyntaxErrorException: ORA-01758: table must be empty to add mandatory (NOT NULL) column
+
+	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:509)
+	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:461)
+	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1104)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:550)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:268)
+	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:655)
+	at oracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:229)
+	at oracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:41)
+	at oracle.jdbc.driver.T4CStatement.executeForRows(T4CStatement.java:928)
+	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1205)
+	at oracle.jdbc.driver.OracleStatement.executeInternal(OracleStatement.java:1823)
+	at oracle.jdbc.driver.OracleStatement.execute(OracleStatement.java:1778)
+	at oracle.jdbc.driver.OracleStatementWrapper.execute(OracleStatementWrapper.java:303)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54)
+	... 39 common frames omitted
+Caused by: oracle.jdbc.OracleDatabaseException: ORA-01758: table must be empty to add mandatory (NOT NULL) column
+
+	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:513)
+	... 54 common frames omitted
+15-12-2021 13:41:39.382 [35m[restartedMain][0;39m [34mINFO [0;39m org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator.initiateService - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+15-12-2021 13:41:39.456 [35m[restartedMain][0;39m [34mINFO [0;39m org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
+15-12-2021 13:41:44.115 [35m[restartedMain][0;39m [31mWARN [0;39m org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+15-12-2021 13:41:47.372 [35m[restartedMain][0;39m [34mINFO [0;39m org.springframework.security.web.DefaultSecurityFilterChain.<init> - Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7cc143d0, org.springframework.security.web.context.SecurityContextPersistenceFilter@468d8c13, org.springframework.security.web.header.HeaderWriterFilter@33a7bc60, org.springframework.security.web.authentication.logout.LogoutFilter@7314fbaa, com.itsol.recruit_managerment.security.AuthorFilter@3ebf6542, com.itsol.recruit_managerment.security.AuthenFilter@5054f79, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@25de4ff4, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@19209761, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@16e4dd04, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5d3f7445, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7f95e731, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@60cdd3cb, org.springframework.security.web.session.SessionManagementFilter@320f6c6d, org.springframework.security.web.access.ExceptionTranslationFilter@30277267, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@771fd750]
+15-12-2021 13:41:51.287 [35m[restartedMain][0;39m [34mINFO [0;39m org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer.startServer - LiveReload server is running on port 35729
+15-12-2021 13:41:51.619 [35m[restartedMain][0;39m [34mINFO [0;39m org.springframework.boot.web.embedded.tomcat.TomcatWebServer.start - Tomcat started on port(s): 9876 (http) with context path ''
+15-12-2021 13:41:51.745 [35m[restartedMain][0;39m [34mINFO [0;39m com.itsol.recruit_managerment.RecruitManagermentApplication.logStarted - Started RecruitManagermentApplication in 66.086 seconds (JVM running for 82.957)
+15-12-2021 13:43:08.206 [35m[http-nio-9876-exec-2][0;39m [34mINFO [0;39m org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/].log - Initializing Spring DispatcherServlet 'dispatcherServlet'
+15-12-2021 13:43:08.263 [35m[http-nio-9876-exec-2][0;39m [34mINFO [0;39m org.springframework.web.servlet.DispatcherServlet.initServletBean - Initializing Servlet 'dispatcherServlet'
+15-12-2021 13:43:08.339 [35m[http-nio-9876-exec-2][0;39m [34mINFO [0;39m org.springframework.web.servlet.DispatcherServlet.initServletBean - Completed initialization in 73 ms
