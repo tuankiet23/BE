@@ -86,7 +86,6 @@ public class AccountController {
                 .fullName(userSignupDTO.getFullName())
                 .email(userSignupDTO.getEmail())
 
-
                 .build();
 //        User user = new User();
 //        user.setFullName(userSignupDTO.getFullName());

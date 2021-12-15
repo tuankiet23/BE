@@ -8,6 +8,7 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.stream.Stream;
 
 
 @Data
@@ -49,5 +50,76 @@ public class JobRegister implements  Serializable {
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private Boolean isDelete;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Job getJob() {
+        return job;
+    }
+
+    public void setJob(Job job) {
+        this.job = job;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Date getDateRegister() {
+        return dateRegister;
+    }
+
+    public void setDateRegister(Date dateRegister) {
+        this.dateRegister = dateRegister;
+    }
+
+    public ProfileStatus getProfileStatus() {
+        return profileStatus;
+    }
+
+    public void setProfileStatus(ProfileStatus profileStatus) {
+        this.profileStatus = profileStatus;
+    }
+
+    public Date getDateInterview() {
+        return dateInterview;
+    }
+
+    public void setDateInterview(Date dateInterview) {
+        this.dateInterview = dateInterview;
+    }
+
+    public String getMethodInterview() {
+        return methodInterview;
+    }
+
+    public void setMethodInterview(String methodInterview) {
+        this.methodInterview = methodInterview;
+    }
+
+    public String getCv() {
+        return cv;
+    }
+
+    public void setCv(String cv) {
+        this.cv = cv;
+    }
+
+    public Boolean getDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(Boolean delete) {
+        isDelete = delete;
+    }
 
 }

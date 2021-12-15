@@ -46,7 +46,6 @@ public class JobServiceimpl implements JobService {
     @Override
     public List<Job> getListNewJobs(Integer numberDate, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
-
         return jobRepo.getListNewJobs(numberDate,  pageable);
     }
 
