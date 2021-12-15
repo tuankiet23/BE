@@ -1,8 +1,14 @@
 package com.itsol.recruit_managerment.vm;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.*;
 import java.util.Date;
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class JobVM {
     @NotEmpty
     @NotBlank(message = "jobName không được để trống")
@@ -15,23 +21,31 @@ public class JobVM {
     @NotEmpty(message = " số lượng cần tuyển luôn phải lớn hơn hoặc bằng 1")
     Integer qty_person;
     @NotEmpty(message = " ngày cấp  không được để trống")
-    String tax_code;
-    @NotEmpty(message = " mã số thuế không được để trống")
-    Date tax_date;
-    @NotEmpty(message = " trụ sở chính  không được để trống")
-    String head_office;
-    @NotEmpty(message = " số lượng nhân viên là số và lớn hơn 0")
-    String number_staff;
-    @NotEmpty(message = " link web  không được để trống")
-    String link_web;
+    Date dueDate;
+    @NotEmpty(message = " ngày bắt đầu không được để trống")
+    Date startRecruitmentDate;
+    @NotEmpty(message = " skill  không được để trống")
+    String skills;
     @NotEmpty(message = " mô tả  không được để trống và không vượt quá 2000 từ")
     String description;
-    @NotEmpty(message = " avatar  không được để trống")
-    String avatar;
-    @NotEmpty(message = " ảnh bìa  không được để trống")
-    String backdrop_img;
     @NotEmpty(message = "   không được để trống")
     Integer is_delete;
+    @NotEmpty(message = "   không được để trống")
+    Integer salary;
+    @NotEmpty(message = "   không được để trống")
+    String interrest;
+    @NotNull
+    Integer job_position_id;
+    @NotNull
+    Integer method_work_id;
+    @NotNull
+    Integer academic_level_id;
+    @NotNull
+    Long contact_id;
+    @NotNull
+    Long create_id;
+    @NotNull
+    Integer job_status_id;
 
 
 }

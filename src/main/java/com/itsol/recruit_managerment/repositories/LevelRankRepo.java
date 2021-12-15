@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
 
-public interface LevelRankRepo extends JpaRepository<LevelRank,Long> {
+public interface LevelRankRepo extends JpaRepository<LevelRank,Long>{
 
 
     @Query(value = "from level_rank u where u.id = :id ")

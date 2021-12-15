@@ -21,7 +21,7 @@ public class LevelRank {
     @SequenceGenerator(name = "LEVEL_RANK_SEQ", sequenceName = "LEVEL_RANK_SEQ", allocationSize = 1, initialValue = 1)
     Long id;
 
-    @Column(name = "name")
+    @Column(name = "level_name")
     String level_name;
 
     @Column(name = "description")

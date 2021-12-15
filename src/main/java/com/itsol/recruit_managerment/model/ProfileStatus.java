@@ -16,7 +16,7 @@ public class ProfileStatus {
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PROFILES_SEQ")
     @SequenceGenerator(name = "PROFILES_SEQ", sequenceName = "PROFILES_SEQ", allocationSize = 1, initialValue = 1)
-    Long id;
+    Integer id;
 
     @Column(name = "name", nullable = false)
     private String name;

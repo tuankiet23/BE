@@ -1,23 +1,26 @@
 package com.itsol.recruit_managerment.dto;
 
-import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.Date;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class JobDTO {
     Long id;
-
     String job_name;
-
-
     Integer job_position_id;
     Integer number_experience;
-    //    @Column(name = "method_work_id")
     Integer method_work_id;
-//    private Method_work method_work;
     String address_work;
     Integer academic_level_id;
     Integer level_id;
     Integer qty_person;
     Date due_date;
+    Date create_date;
+    Date start_recruitment_date;
     String skills;
     String description;
     String interrest;

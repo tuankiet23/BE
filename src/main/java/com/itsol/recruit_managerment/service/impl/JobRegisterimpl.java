@@ -2,7 +2,7 @@ package com.itsol.recruit_managerment.service.impl;
 
 import com.itsol.recruit_managerment.model.JobRegister;
 import com.itsol.recruit_managerment.repositories.JobRegisterRepo;
-import com.itsol.recruit_managerment.repositories.JobRepo;
+//import com.itsol.recruit_managerment.repositories.JobRepo;
 import com.itsol.recruit_managerment.service.JobRegisterService;
 import com.itsol.recruit_managerment.service.Task;
 import lombok.AllArgsConstructor;
@@ -21,8 +21,8 @@ public class JobRegisterimpl implements Task<JobRegister>, JobRegisterService {
 
     JobRegisterRepo jobRegisterRepo;
 
-    @Autowired
-    JobRepo jobRepo;
+//    @Autowired
+//    JobRepo jobRepo;
 
     @Override
     public List<JobRegister> getAll() {

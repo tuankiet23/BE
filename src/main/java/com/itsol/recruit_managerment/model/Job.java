@@ -1,9 +1,6 @@
 package com.itsol.recruit_managerment.model;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.Type;
 
@@ -15,6 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 public class Job {
     @Id
     @Column(nullable = false)
@@ -89,4 +87,6 @@ public class Job {
     @Column(name = "isDelete ")
     @Type(type = "org.hibernate.type.NumericBooleanType")
     boolean isDelete ;
+
+
 }

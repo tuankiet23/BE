@@ -1,8 +1,8 @@
 #spring:
 #  datasource:
-#    url: jdbc:oracle:thin:@localhost:1521:ORCL
-#    username: ITSOLDEMO
-#    password: phamtuankiet
+#    url: jdbc:oracle:thin:@localhost:1521:sa
+#    username: QLDT
+#    password: 123
 
 #     url: jdbc:oracle:thin:@localhost:1521:qlsvitsol
 #     username: GIAP1234
@@ -34,9 +34,11 @@ server:
   port: 9876
 
 spring:
-    url: jdbc:oracle:thin:@localhost:1521:xe
-    username: ITSOLDEMO
-    password: 123456
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:sa
+    username: QLDT
+    password: 123
   jpa:
     hibernate:
       ddl-auto: update

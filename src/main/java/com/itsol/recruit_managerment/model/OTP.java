@@ -3,6 +3,7 @@ package com.itsol.recruit_managerment.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Random;
 
 
@@ -18,6 +19,7 @@ public class OTP {
     private Long id;
     private String code;
     private Long issueAt;
+    private Date create_date;
     @OneToOne
     private User user;
 

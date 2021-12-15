@@ -38,9 +38,9 @@ public class AcademicLevelController {
         return academiclevelimpl.getById(id);
     }
 
-    @PutMapping("/delete/{id}")
-    public ResponseEntity<Object> deleteAcademic(@PathVariable Long id) {
-        academiclevelimpl.deleteById(id);
-        return ResponseEntity.badRequest().body("abc");
-    }
+//    @PutMapping("/delete/{id}")
+//    public ResponseEntity<Object> deleteAcademic(@PathVariable Long id) {
+//        academiclevelimpl.deleteById(id);
+//        return ResponseEntity.badRequest().body("abc");
+//    }
 }

@@ -18,4 +18,5 @@ public interface AcademiclevelRepo extends JpaRepository<AcademicLevel, Long> {
     @Query(value = " update Academic_Level u set u.isDelete = 0 where u.id=:id")
     void deleteAc(@Param("id") Long id);
 
+
 }
