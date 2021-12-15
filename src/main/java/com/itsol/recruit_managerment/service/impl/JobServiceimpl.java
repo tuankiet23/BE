@@ -2,16 +2,15 @@ package com.itsol.recruit_managerment.service.impl;
 
 import com.itsol.recruit_managerment.model.Job;
 
-import com.itsol.recruit_managerment.repositories.JobRepo;
+import com.itsol.recruit_managerment.repositories.UserJobRepositoryImpl;
+import com.itsol.recruit_managerment.repositories.jpa.JobRepoJPA;
 import com.itsol.recruit_managerment.service.JobService;
 
 
-
+import com.itsol.recruit_managerment.utils.ModJob;
+import com.itsol.recruit_managerment.vm.JobVM;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,9 @@ import java.util.List;
 @Slf4j
 public class JobServiceimpl implements JobService {
 
-    JobRepo jobRepo;
+    JobRepoJPA jobRepo;
+
+    UserJobRepositoryImpl userJobRepository;
 
 
     @Override
@@ -62,5 +63,9 @@ public class JobServiceimpl implements JobService {
         return jobRepo.getListJobsDeadLine(numberDate, pageable);
     }
 
+    @Override
+    public List<Job> searchJobs( int modJob) {
+        return userJobRepository.searchJobs(modJob) ;
+    }
 
 }

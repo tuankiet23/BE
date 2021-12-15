@@ -7,12 +7,15 @@ import com.itsol.recruit_managerment.model.JobRegister;
 import com.itsol.recruit_managerment.model.ProfileStatus;
 import com.itsol.recruit_managerment.repositories.IUserRespository;
 import com.itsol.recruit_managerment.repositories.JobRegisterRepo;
+
 import com.itsol.recruit_managerment.repositories.JobRepo;
 import com.itsol.recruit_managerment.repositories.ProfileStatusRepo;
 import com.itsol.recruit_managerment.service.JobRegisterService;
-
 import com.itsol.recruit_managerment.vm.JobRegisterVM;
 import lombok.AllArgsConstructor;
+import com.itsol.recruit_managerment.repositories.jpa.JobRepoJPA;
+import com.itsol.recruit_managerment.service.JobRegisterService;
+import com.itsol.recruit_managerment.service.Task;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +34,13 @@ public class JobRegisterimpl implements  JobRegisterService {
     @Autowired
     JobRegisterRepo jobRegisterRepo;
     @Autowired
-    JobRepo jobRepo;
     @Autowired
     IUserRespository iUserRespository;
     @Autowired
     ProfileStatusRepo profileStatusRepo;
     @Autowired
     private EmailServiceImpl emailService;
-
-
+    JobRepoJPA jobRepo;
     @Override
     public List<JobRegister> getAllJobRegister() {
 

@@ -36,9 +36,19 @@ server:
 spring:
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
+
     url: jdbc:oracle:thin:@localhost:1521:sa
     username: ITSOLDEMO2
     password: 123456
+# =======
+#     url: jdbc:oracle:thin:@localhost:1521:qlsvitsol
+#     username: GIAP12345
+#     password: 12345
+
+# #    url: jdbc:oracle:thin:@localhost:1521:xe
+# #    username: ITSOLDEMO
+# #    password: 123456
+# >>>>>>> main
   jpa:
     hibernate:
       ddl-auto: update
@@ -58,6 +68,14 @@ spring:
           auth: true
           starttls:
             enable: true
+logging:
+  level:
+    root: info
+  file:
+    name: ./log.txt
+  pattern:
+    console: '%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n'
+    file: '%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n'
 
 application:
   active-account:
