@@ -3,7 +3,6 @@ package com.itsol.recruit_managerment.service;
 import com.itsol.recruit_managerment.dto.UserSignupDTO;
 import com.itsol.recruit_managerment.model.User;
 import com.itsol.recruit_managerment.repositories.IUserRespository;
-import com.itsol.recruit_managerment.service.impl.UserServiceimpl;
 import com.itsol.recruit_managerment.utils.CommonConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +15,7 @@ import java.text.SimpleDateFormat;
 public class AdminService {
     @Autowired
     IUserRespository iUserRespository;
-    @Autowired
-    UserServiceimpl userServiceimpl;
+
 
     public int update(UserSignupDTO userSignupDTO, Long id) {
         User newUser = new User();

@@ -6,6 +6,8 @@ import com.itsol.recruit_managerment.dto.AuthenDTO;
 import com.itsol.recruit_managerment.model.OTP;
 import com.itsol.recruit_managerment.service.UserService;
 import com.itsol.recruit_managerment.service.impl.UserServiceimpl;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,6 +31,7 @@ import java.util.stream.Collectors;
 
 public class AuthenFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
+    private String SECRET_KEY = "secret";
     @Autowired
     UserService appUserService;
 
@@ -71,5 +74,19 @@ public class AuthenFilter extends UsernamePasswordAuthenticationFilter {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), tokenObj);
     }
+    public String generateToken(UserDetails userDetails) {
+        Map<String, Object> claims = new HashMap<>();
+        return createToken(claims, userDetails.getUsername());
+    }
+    private String createToken(Map<String, Object> claims, String subject) {
 
+        return Jwts.builder().setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 20 * 60 * 1000))
+                .setIssuer("Xixon-Knight")
+                .setHeaderParam("tokenType", "Bearer ")
+                .setAudience("You")
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
+    }
 }

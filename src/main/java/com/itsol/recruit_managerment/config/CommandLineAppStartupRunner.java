@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CommandLineAppStartupRunner implements CommandLineRunner {
+public class  CommandLineAppStartupRunner implements CommandLineRunner {
     @Autowired
     PasswordEncoder passwordEncoder;
     @Autowired

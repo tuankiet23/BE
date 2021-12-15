@@ -1,13 +1,13 @@
 package com.itsol.recruit_managerment.service.impl;
-
-
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.itsol.recruit_managerment.dto.PasswordDTO;
 import com.itsol.recruit_managerment.dto.UserSignupDTO;
 import com.itsol.recruit_managerment.email.EmailServiceImpl;
 import com.itsol.recruit_managerment.model.OTP;
 import com.itsol.recruit_managerment.model.Role;
 import com.itsol.recruit_managerment.model.User;
-
 import com.itsol.recruit_managerment.repositories.IUserRespository;
 import com.itsol.recruit_managerment.repositories.OTPRepo;
 import com.itsol.recruit_managerment.repositories.RoleRepo;
@@ -24,13 +24,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-
+import com.auth0.jwt.JWTVerifier;
 @Service
 @Transactional
 public class UserServiceimpl implements UserService {
@@ -46,6 +47,7 @@ public class UserServiceimpl implements UserService {
     EmailServiceImpl emailService;
     @Autowired
     IUserRespository iUserRespository;
+
 
     public UserServiceimpl(PasswordEncoder passwordEncoder, EmailServiceImpl emailService) {
         this.passwordEncoder = passwordEncoder;
@@ -92,7 +94,7 @@ public class UserServiceimpl implements UserService {
             newUser.setPhoneNumber(userSignupDTO.getPhoneNumber());
             newUser.setFullName(userSignupDTO.getFullName());
             newUser.setUserName(userSignupDTO.getUserName());
-            newUser.setPassword(userSignupDTO.getPassword());
+            newUser.setPassword(passwordEncoder.encode(userSignupDTO.getPassword()));
             newUser.setActive(true);
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             try {
@@ -106,12 +108,17 @@ public class UserServiceimpl implements UserService {
             return CommonConst.ERROR;
         }
     }
-    public int deleteById(Long deletepcId) {
+    public int delete( Long id) {
+
         try {
-            iUserRespository.deleteById(deletepcId);
+
+            User newUser = iUserRespository.getUserById(id);
+
+            newUser.setActive(false);
+
+            iUserRespository.save(newUser);
             return CommonConst.SUCCESS;
         } catch (Exception e) {
-            // TODO: handle exception
             return CommonConst.ERROR;
         }
     }
@@ -144,7 +151,7 @@ public class UserServiceimpl implements UserService {
     public void addRoleToUser(String username, String roleName) {
         User user = userRepo.findByUserName(username);
         Role role = roleRepo.findByName(roleName);
-        //user.getRoles().add(role);
+        user.getRoles().add(role);
     }
 
     @Override
@@ -186,7 +193,6 @@ public class UserServiceimpl implements UserService {
             throw new RuntimeException("OTP is expired");
         }
     }
-
     @Override
     public OTP retrieveNewOTP(User user) {
         OTP otp = getOTPByUser(user);
@@ -268,12 +274,21 @@ public class UserServiceimpl implements UserService {
                 .homeTown(userSignupDTO.getHomeTown())
                 .gender(userSignupDTO.getGender())
                 .userName(userSignupDTO.getUserName())
-                .password(userSignupDTO.getPassword())
+                .password(passwordEncoder.encode(userSignupDTO.getPassword()))
                 .build();
 
     }
     @Override
     public Object getAllJE(){
         return   userRepo.getAllJE();
+    }
+    @Override
+    public Object getProfileUser(HttpServletRequest request){
+        String authorHeader =request.getHeader("Authorization");
+        String token =authorHeader.substring("Bearer ".length());
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());// truongbb - secret key không nên fix cứng như này, nên mã hóa 1 lớp và để ở config
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT =verifier.verify(token);
+        return  decodedJWT.getClaim("roles").asArray(String.class);
     }
 }

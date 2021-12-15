@@ -1,4 +1,5 @@
 package com.itsol.recruit_managerment.controller;
+
 import com.itsol.recruit_managerment.config.AccountActivationConfig;
 import com.itsol.recruit_managerment.constant.DateTimeConstant;
 import com.itsol.recruit_managerment.dto.UserSignupDTO;
@@ -16,51 +17,59 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
+
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Set;
 
 @RestController
 @RequestMapping("/api/admin")
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class AdminController {
-@Autowired
+    @Autowired
     RoleRepo roleRepo;
-@Autowired
+    @Autowired
     UserServiceimpl userServiceimpl;
-@Autowired
+    @Autowired
     UserService userService;
-@Autowired
+    @Autowired
     AccountActivationConfig accountActivationConfig;
-@Autowired
+    @Autowired
     EmailServiceImpl emailService;
-@Autowired
+    @Autowired
     AdminService adminService;
-@PostMapping("/singupje")
-public ResponseEntity<String>  singupje(@RequestBody UserSignupDTO userSignupDTO){
-    Role role = roleRepo.findByName("ROLE_JE");
-    User user = userServiceimpl.createUser(userSignupDTO);
-    if(ObjectUtils.isEmpty(user)){
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
+    @PostMapping("/singupje")
+//    @RequestMapping(
+//            value = "/singupje",
+//            produces = "application/json",
+//            method = RequestMethod.POST)
+    public ResponseEntity<String> singupje(@RequestBody UserSignupDTO userSignupDTO) {
+        Role role = roleRepo.findByName("ROLE_JE");
+        User user = userServiceimpl.createUser(userSignupDTO);
+        if (ObjectUtils.isEmpty(user)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        }
+        Set<Role> roles = new HashSet<>();
+        roles.add(role);
+        user.setRoles(roles);
+        SimpleDateFormat sdf = new SimpleDateFormat(DateTimeConstant.YYYYMMDD_FOMART);
+        try {
+            user.setBirthDay(sdf.parse(userSignupDTO.getBirthDay()));
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+        user.setActive(false);
+        user.setIsDelete(0);
+        userService.saveUser(user);
+        OTP otp = userService.generateOTP(user);
+        String linkActive = accountActivationConfig.getActivateUrl() + user.getId();
+        emailService.sendSimpleMessage(user.getEmail(), "Link active account", "<a href=\" " + linkActive + "\">Click vào đây để kích hoạt tài khoản</a>");
+        return ResponseEntity.ok().body("check email for OTP");
     }
-    Set<Role> roles = new HashSet<>();
-    roles.add(role);
-    user.setRoles(roles);
-    SimpleDateFormat sdf = new SimpleDateFormat(DateTimeConstant.YYYYMMDD_FOMART);
-    try {
-        user.setBirthDay(sdf.parse(userSignupDTO.getBirthDay()));
-    } catch (java.text.ParseException e) {
-        e.printStackTrace();
-    }
-    user.setActive(false);
-    user.setIsDelete(0);
-    userService.saveUser(user);
-    OTP otp = userService.generateOTP(user);
-    String linkActive = accountActivationConfig.getActivateUrl() + user.getId();
-    emailService.sendSimpleMessage(user.getEmail(),"Link active account","<a href=\" " + linkActive + "\">Click vào đây để kích hoạt tài khoản</a>");
-    return ResponseEntity.ok().body("check email for OTP");
-}
+
     @GetMapping("/active/{id}")
     public ResponseEntity<String> activeAccount(@PathVariable Long id) {
         try {
@@ -74,26 +83,29 @@ public ResponseEntity<String>  singupje(@RequestBody UserSignupDTO userSignupDTO
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
     @GetMapping("/getallje")
-    public Object getAllJe(){
-        return  userService.getAllJE();
+    public Object getAllJe() {
+        return userService.getAllJE();
     }
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@PathVariable Long id , @RequestBody UserSignupDTO userSignupDTO) {
+
+    @PutMapping("/updateJE/{id}")
+    public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody UserSignupDTO userSignupDTO) {
         try {
-            adminService.update(userSignupDTO,id);
-            return  ResponseEntity.ok().body(userSignupDTO);
-        }catch (Exception e){
+            adminService.update(userSignupDTO, id);
+            return ResponseEntity.ok().body(userSignupDTO);
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body("failed to update user");
         }
-}
+    }
+
     @PutMapping("/delete/{id}")
-    public ResponseEntity<Object> delete(@PathVariable Long id ) {
+    public ResponseEntity<Object> delete(@PathVariable Long id) {
         try {
             adminService.delete(id);
-            return  ResponseEntity.ok().body("xóa thành công");
-        }catch (Exception e){
+            return ResponseEntity.ok().body("xóa thành công");
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body("failed to update user");
         }
