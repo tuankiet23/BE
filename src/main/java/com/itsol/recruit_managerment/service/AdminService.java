@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -18,10 +19,8 @@ public class AdminService {
 
 
     public int update(UserSignupDTO userSignupDTO, Long id) {
-        User newUser = new User();
+        User newUser = iUserRespository.findById(id).get();
         try {
-
-            newUser.setId(id);
             newUser.setGender(userSignupDTO.getGender());
             newUser.setEmail(userSignupDTO.getEmail());
             newUser.setHomeTown(userSignupDTO.getHomeTown());
@@ -29,7 +28,6 @@ public class AdminService {
             newUser.setFullName(userSignupDTO.getFullName());
             newUser.setUserName(userSignupDTO.getUserName());
             newUser.setPassword(userSignupDTO.getPassword());
-            newUser.setActive(true);
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             try {
                 newUser.setBirthDay(sdf.parse(userSignupDTO.getBirthDay()));
@@ -42,7 +40,8 @@ public class AdminService {
             return CommonConst.ERROR;
         }
     }
-    public int delete( Long id) {
+
+    public int delete(Long id) {
 
         try {
 
@@ -56,5 +55,10 @@ public class AdminService {
             return CommonConst.ERROR;
         }
     }
+
+    public Optional<User> findById(Long id) {
+        return iUserRespository.findById(id);
+    }
+
 
 }

@@ -88,6 +88,10 @@ public class AdminController {
     public Object getAllJe() {
         return userService.getAllJE();
     }
+    @GetMapping("/getje/{id}")
+    public User getJeById(@PathVariable("id")  Long id) {
+        return adminService.findById(id).get();
+    }
 
     @PutMapping("/updateJE/{id}")
     public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody UserSignupDTO userSignupDTO) {
