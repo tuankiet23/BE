@@ -14,39 +14,39 @@ public class JobVM {
 
     String jobName;
 
-//    JobPosition jobPosition;
+    JobPosition jobPosition;
 
-//    Integer numberExperience;
+    Integer numberExperience;
 
-//    MethodWork method_work;
+    MethodWork method_work;
 
-//    String addressWork;
+    String addressWork;
 
-//    AcademicLevel academicLevel ;
+    AcademicLevel academicLevel ;
 
-//    LevelRank levelRank ;
+    LevelRank levelRank ;
 
     Integer qtyPerson;
 
-//    Date dueDate;
-//
-//    Date startRecruitmentDate ;
-//
-//    String skills;
-//
-//    String description;
-//
-//    String interrest;
-//
-//    Integer salary;
+    Date dueDate;
 
-//    User contact;
+    Date startRecruitmentDate ;
 
-//    StatusJob statusJob;
+    String skills;
 
-//    Integer views;
+    String description;
 
-//    User creater;
+    String interrest;
 
-//    Date createDate ;
+    Integer salary;
+
+    User contact;
+
+    StatusJob statusJob;
+
+    Integer views;
+
+    User creater;
+
+    Date createDate ;
 }

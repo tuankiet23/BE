@@ -7,6 +7,7 @@ import com.itsol.recruit_managerment.repositories.jpa.JobRepoJPA;
 import com.itsol.recruit_managerment.service.JobService;
 
 
+import com.itsol.recruit_managerment.utils.ModJob;
 import com.itsol.recruit_managerment.vm.JobVM;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -63,8 +64,8 @@ public class JobServiceimpl implements JobService {
     }
 
     @Override
-    public List<Job> searchJobs(JobVM jobVM) {
-        return userJobRepository.searchJobs(jobVM) ;
+    public List<Job> searchJobs( int modJob) {
+        return userJobRepository.searchJobs(modJob) ;
     }
 
 }
