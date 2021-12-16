@@ -11,6 +11,7 @@ import java.util.List;
 
 @EnableJpaRepositories
 public interface JobRegisterRepo extends JpaRepository<JobRegister,Long> {
+
     @Query(value = "from job_register u where u.isDelete = true ")
     List<JobRegister> getAllJR();
 }

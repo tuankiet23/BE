@@ -70,14 +70,13 @@ public class JobRegisterimpl implements JobRegisterService {
 
     @Override
     public Boolean delete(Long id) {
-        try{
-            JobRegister jobRegister=jobRegisterRepo.getById(id);
+        try {
+            JobRegister jobRegister = jobRegisterRepo.getById(id);
             jobRegister.setDelete(false);
             jobRegisterRepo.save(jobRegister);
             return true;
 
-        }catch (Exception ex)
-        {
+        } catch (Exception ex) {
             log.error(ex.getMessage(), ex);
         }
         return null;
@@ -85,16 +84,17 @@ public class JobRegisterimpl implements JobRegisterService {
 
     @Override
     public Boolean save(JobRegisterVM jobRegisterVM) {
-        try{
-            JobRegister jobRegister=convert(jobRegisterVM);
-             jobRegisterRepo.save(jobRegister);
+        try {
+            JobRegister jobRegister;
+            jobRegister = convert(jobRegisterVM);
+            jobRegisterRepo.save(jobRegister);
             System.out.println(jobRegisterVM.getProfilestatus());
-             if(jobRegisterVM.getProfilestatus().compareTo("1")==0)
-                emailService.sendSimpleMessage(jobRegister.getUser().getUserName(),
+            if (jobRegisterVM.getProfilestatus().compareTo("1") == 0)
+                emailService.sendSimpleMessage(jobRegister.getUser().getEmail(),
                         "Thư mời phỏng vấn",
                         "abc");
-             return true;
-        }catch (Exception e){
+            return true;
+        } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
         return false;
@@ -103,14 +103,14 @@ public class JobRegisterimpl implements JobRegisterService {
 
     @Override
     public AdminJobRegisterDTO getJobRegisterById(Long id) {
-        try{
-            JobRegister jobRegister=jobRegisterRepo.getById(id);
-            List<ProfileStatus> profileStatuses=profileStatusRepo.findAll();
+        try {
+            JobRegister jobRegister = jobRegisterRepo.getById(id);
+            List<ProfileStatus> profileStatuses = profileStatusRepo.findAll();
             AdminJobRegisterDTO adminJobRegisterDTO = new AdminJobRegisterDTO();
             adminJobRegisterDTO.setJobRegister(jobRegister);
             adminJobRegisterDTO.setProfileStatuses(profileStatuses);
             return adminJobRegisterDTO;
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
         return null;
@@ -118,10 +118,10 @@ public class JobRegisterimpl implements JobRegisterService {
 
     @Override
     public List<JobRegister> getAllJR() {
-        try{
-            List<JobRegister> jobRegister=jobRegisterRepo.getAllJR();
-            return  jobRegister;
-        }catch (Exception e){
+        try {
+            List<JobRegister> jobRegister = jobRegisterRepo.getAllJR();
+            return jobRegister;
+        } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
         return null;
@@ -141,22 +141,21 @@ public class JobRegisterimpl implements JobRegisterService {
         return null;
     }
 
-    public JobRegister convert(JobRegisterVM jobRegisterVM){
-        try{
-            JobRegister jobRegister;
-            jobRegister=jobRegisterRepo.getById(Long.parseLong(jobRegisterVM.getId()));
-            jobRegister.setProfileStatus(profileStatusRepo.getById(Long.parseLong(jobRegisterVM.getId())));
+    public JobRegister convert(JobRegisterVM jobRegisterVM) {
+        try {
+            Long idj = Long.parseLong(jobRegisterVM.getId());
+            Optional<JobRegister> jobRegister = jobRegisterRepo.findById(idj);
+            Long idp =Long.parseLong(jobRegisterVM.getId());
+           // jobRegister.get().setProfileStatus(profileStatusRepo.findById(idp).get());
             SimpleDateFormat sdf = new SimpleDateFormat(DateTimeConstant.YYYYMMDD_FOMART);
-            jobRegister.setDateInterview(sdf.parse(jobRegisterVM.getDateinterview()));
-            jobRegister.setMethodInterview(jobRegisterVM.getMethodinterview());
-            return jobRegister;
-        }catch (Exception ex)
-        {
+            jobRegister.get().setDateInterview(sdf.parse(jobRegisterVM.getDateinterview()));
+            jobRegister.get().setMethodInterview(jobRegisterVM.getMethodinterview());
+            return jobRegister.get();
+        } catch (Exception ex) {
             log.error(ex.getMessage(), ex);
         }
         return null;
     }
-
 
 
 }

@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user/job")
@@ -18,7 +19,7 @@ public class JobController {
 
     @CrossOrigin
     @GetMapping("/{id}")
-    public Job getJobDetail(@PathVariable("id") Long id) {
+    public Optional<Job> getJobDetail(@PathVariable("id") Long id) {
         return jobService.getJobById(id);
     }
 

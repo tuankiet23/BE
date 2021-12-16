@@ -9,14 +9,13 @@ import com.itsol.recruit_managerment.service.JobService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 @Slf4j
@@ -31,12 +30,13 @@ public class JobServiceimpl implements JobService {
     }
 
     @Override
-    public Job getJobById(Long id) {
+    public Optional<Job> getJobById(Long id) {
         try {
-            Job job= jobRepo.getJobById(id);
-            Integer view= job.getViews() +1;
-            jobRepo.updateView(id, view);
-            return job;
+//            Job job= jobRepo.getById(id);
+//            Integer view= job.getViews() +1;
+//            job.setViews(view);
+//            jobRepo.save(job);
+            return jobRepo.findById(id);
         }catch (Exception e){
           log.error("failed get by id: " + id);
             return null;

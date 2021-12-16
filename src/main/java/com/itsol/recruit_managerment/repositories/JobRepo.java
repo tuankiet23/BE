@@ -48,12 +48,5 @@ api danh sach viec lam mới
     List<Job> getListJobsDeadLine(@Param("numberDay") Integer numberDay, Pageable pageable);
 
   //kiet
-    @Query(value = "from Jobs u where u.id = :id ")
-    Job getJobById(@Param("id") Long id);
-
-    @Transactional
-    @Modifying
-    @Query(value = "update Jobs u set u.views=:view where u.id = :id")
-    void updateView(@Param("id") Long id, Integer view);
 
 }

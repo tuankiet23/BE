@@ -1,11 +1,13 @@
 package com.itsol.recruit_managerment.service;
 
 import com.itsol.recruit_managerment.dto.PasswordDTO;
+import com.itsol.recruit_managerment.dto.UserSignupDTO;
 import com.itsol.recruit_managerment.model.OTP;
 import com.itsol.recruit_managerment.model.Role;
 import com.itsol.recruit_managerment.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,4 +41,5 @@ public interface UserService extends UserDetailsService {
     void changePassword(String password, User user);
 
     User loadUserFromContext();
-}
+ }
+
