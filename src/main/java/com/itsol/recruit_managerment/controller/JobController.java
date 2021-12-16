@@ -83,8 +83,8 @@ public class JobController {
 
     @CrossOrigin
     @GetMapping("/home-page")
-    public List<Job>searchJob(@RequestParam("modjob") int modJob) {
-        return jobService.searchJobs(modJob);
+    public List<Job>searchJob(@RequestParam("modjob") int modJob , @RequestParam("startrow") int startrow, @RequestParam("endrow") int endrow) {
+        return jobService.searchJobs(modJob, startrow, endrow);
     }
 
     @CrossOrigin

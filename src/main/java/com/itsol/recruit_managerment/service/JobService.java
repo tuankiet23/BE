@@ -21,5 +21,5 @@ public interface JobService {
 
 //    List<Job> searchJobs(JobVM jobVM);
 
-    List<Job> searchJobs(int modJob);
+    List<Job> searchJobs(int modJob,int startrow, int endrow);
 }

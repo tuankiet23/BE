@@ -64,8 +64,8 @@ public class JobServiceimpl implements JobService {
     }
 
     @Override
-    public List<Job> searchJobs( int modJob) {
-        return userJobRepository.searchJobs(modJob) ;
+    public List<Job> searchJobs( int modJob, int startRow, int endRow) {
+        return userJobRepository.searchJobs(modJob, startRow, endRow) ;
     }
 
 }
