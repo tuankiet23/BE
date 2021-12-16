@@ -8,7 +8,7 @@ import com.itsol.recruit_managerment.model.ProfileStatus;
 import com.itsol.recruit_managerment.repositories.IUserRespository;
 import com.itsol.recruit_managerment.repositories.JobRegisterRepo;
 
-import com.itsol.recruit_managerment.repositories.JobRepo;
+//import com.itsol.recruit_managerment.repositories.JobRepo;
 import com.itsol.recruit_managerment.repositories.ProfileStatusRepo;
 import com.itsol.recruit_managerment.service.JobRegisterService;
 import com.itsol.recruit_managerment.vm.JobRegisterVM;
@@ -33,7 +33,6 @@ public class JobRegisterimpl implements  JobRegisterService {
 
     @Autowired
     JobRegisterRepo jobRegisterRepo;
-    @Autowired
     @Autowired
     IUserRespository iUserRespository;
     @Autowired
