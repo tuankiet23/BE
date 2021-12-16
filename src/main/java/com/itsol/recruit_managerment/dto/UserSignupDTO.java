@@ -20,5 +20,6 @@ public class UserSignupDTO {
     private String  homeTown;
     private String  gender;
     private String birthDay;
+    private  String active;
     private Set<Role> roles;
 }

@@ -1,13 +1,17 @@
 package com.itsol.recruit_managerment.vm;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class JobRegisterVM {
-    Integer id;
-    Integer iduser;
-    Integer idjob;
-    Integer idprofilestatus;
-    String dateinterview;
+    String id;
+    String profilestatus;
     String dateregister;
+    String dateinterview;
     String methodinterview;
-    String cvfile;
-    Integer isdelete;
+    String cv;
 }
