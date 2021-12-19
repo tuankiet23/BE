@@ -4,14 +4,24 @@ import com.itsol.recruit_managerment.model.JobRegister;
 import com.itsol.recruit_managerment.service.JobRegisterService;
 import com.itsol.recruit_managerment.service.impl.JobRegisterimpl;
 import com.itsol.recruit_managerment.vm.JobRegisterVM;
+import com.itsol.recruit_managerment.vm.SearchJobRegisterVM;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.jni.FileInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.*;
+import java.nio.file.Files;
 import java.util.List;
+
+import static org.springframework.util.FileCopyUtils.BUFFER_SIZE;
+import static org.springframework.util.FileCopyUtils.copy;
 
 @Slf4j
 @RestController
@@ -68,15 +78,45 @@ public class JobRegisterController {
         return jobRegisterService.getJobRegisterById(id);
     }
 
-    @PostMapping("/pic/{fileName}")
-    public Object download(@PathVariable("fileName") String fileName) {
-        return jobRegisterService.download(fileName);
-    }
 
     @CrossOrigin()
     @GetMapping()
     public List<JobRegister> getAll(){
         return jobRegisterService.getAllJR();
+    }
+
+    @CrossOrigin()
+    @PutMapping("/search")
+    public List<JobRegister> search(@Valid @RequestBody SearchJobRegisterVM searchJobRegisterVM){
+        return jobRegisterService.searchJobRegister(searchJobRegisterVM);
+    }
+
+
+    @GetMapping("/link/{id}")
+    public void getResource(@PathVariable("id") Long id, HttpServletResponse response) throws IOException {
+        FileOutputStream fileOutputStream;
+        JobRegister jobRegister= jobRegisterService.getDetailJR(id);
+        String fileLocation=jobRegister.getCv();
+        File downloadFile= new File(fileLocation);
+        byte[] isr = Files.readAllBytes(downloadFile.toPath());
+        ByteArrayOutputStream out = new ByteArrayOutputStream(isr.length);
+
+        out.write(isr, 0, isr.length);
+        fileOutputStream = new FileOutputStream("D:\\bai2.pdf");
+        fileOutputStream.write(out.toByteArray());
+        response.setContentType("application/pdf");
+        // Use 'inline' for preview and 'attachement' for download in browser.
+        response.addHeader("Content-Disposition", "inline; filename="+jobRegister.getId());
+        OutputStream os;
+        try {
+            os = response.getOutputStream();
+            out.writeTo(os);
+            os.flush();
+            os.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

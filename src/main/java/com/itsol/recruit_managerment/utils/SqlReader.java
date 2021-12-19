@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 public class SqlReader {
 
     public static final String ADMIN_DASHBOARD_MODULE = "admin/admin_dashboard";
+    public static final String ADMIN_MODULE = "admin/admin_jobregister";
     public static final String USER_HOME_MODULE = "user/home";
 
 
