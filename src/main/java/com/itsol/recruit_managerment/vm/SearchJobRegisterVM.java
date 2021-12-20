@@ -4,14 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class JobRegisterVM {
-    String id;
-    String profilestatus;
-    String dateregister;
-    String dateinterview;
-    String methodinterview;
-    String cv;
+public class SearchJobRegisterVM {
+    String fullName;
+    String jobName;
+    String phoneNumber;
+    Date dateRegister;
+    Date dateInterview;
+
+
 }

@@ -1,12 +1,13 @@
 package com.itsol.recruit_managerment.service.impl;
-
-
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.itsol.recruit_managerment.dto.PasswordDTO;
+import com.itsol.recruit_managerment.dto.UserSignupDTO;
 import com.itsol.recruit_managerment.email.EmailServiceImpl;
 import com.itsol.recruit_managerment.model.OTP;
 import com.itsol.recruit_managerment.model.Role;
 import com.itsol.recruit_managerment.model.User;
-
 import com.itsol.recruit_managerment.repositories.IUserRespository;
 import com.itsol.recruit_managerment.repositories.OTPRepo;
 import com.itsol.recruit_managerment.repositories.RoleRepo;
@@ -14,6 +15,7 @@ import com.itsol.recruit_managerment.service.UserService;
 import com.itsol.recruit_managerment.utils.CommonConst;
 import com.itsol.recruit_managerment.vm.UserVM;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,12 +24,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+import java.util.Random;
+import com.auth0.jwt.JWTVerifier;
 @Service
 @Transactional
 public class UserServiceimpl implements UserService {
@@ -44,6 +48,7 @@ public class UserServiceimpl implements UserService {
     @Autowired
     IUserRespository iUserRespository;
 
+
     public UserServiceimpl(PasswordEncoder passwordEncoder, EmailServiceImpl emailService) {
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
@@ -56,11 +61,6 @@ public class UserServiceimpl implements UserService {
     public int add(UserVM userVM) {
         User newUser = new User();
         try {
-            boolean check = validateUser(userVM);
-            if (!check) {
-                System.out.println("........");
-                return 0;
-            }
             newUser.setGender(userVM.getGender());
             newUser.setEmail(userVM.getEmail());
             newUser.setHomeTown(userVM.getHomeTown());
@@ -81,29 +81,24 @@ public class UserServiceimpl implements UserService {
         }
     }
 
-    public boolean validateUser(UserVM userVM) {
-        return true;
-    }
 
-    public int update(UserVM userVM, Long id) {
+
+    public int update(UserSignupDTO userSignupDTO, Long id) {
         User newUser = new User();
         try {
-            boolean check = validateUser(userVM);
-            if (!check) {
-                System.out.println("........");
-                return 0;
-            }
+
             newUser.setId(id);
-            newUser.setGender(userVM.getGender());
-            newUser.setEmail(userVM.getEmail());
-            newUser.setHomeTown(userVM.getHomeTown());
-            newUser.setPhoneNumber(userVM.getPhoneNumber());
-            newUser.setFullName(userVM.getFullName());
-            newUser.setUserName(userVM.getUserName());
-            newUser.setPassword(userVM.getPassword());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            newUser.setGender(userSignupDTO.getGender());
+            newUser.setEmail(userSignupDTO.getEmail());
+            newUser.setHomeTown(userSignupDTO.getHomeTown());
+            newUser.setPhoneNumber(userSignupDTO.getPhoneNumber());
+            newUser.setFullName(userSignupDTO.getFullName());
+            newUser.setUserName(userSignupDTO.getUserName());
+            newUser.setPassword(passwordEncoder.encode(userSignupDTO.getPassword()));
+            newUser.setActive(true);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             try {
-                newUser.setBirthDay(sdf.parse(userVM.getBirthDay()));
+                newUser.setBirthDay(sdf.parse(userSignupDTO.getBirthDay()));
             } catch (java.text.ParseException e) {
                 e.printStackTrace();
             }
@@ -113,12 +108,17 @@ public class UserServiceimpl implements UserService {
             return CommonConst.ERROR;
         }
     }
-    public int deleteById(Long deletepcId) {
+    public int delete( Long id) {
+
         try {
-            iUserRespository.deleteById(deletepcId);
+
+            User newUser = iUserRespository.getUserById(id);
+
+            newUser.setActive(false);
+
+            iUserRespository.save(newUser);
             return CommonConst.SUCCESS;
         } catch (Exception e) {
-            // TODO: handle exception
             return CommonConst.ERROR;
         }
     }
@@ -151,7 +151,7 @@ public class UserServiceimpl implements UserService {
     public void addRoleToUser(String username, String roleName) {
         User user = userRepo.findByUserName(username);
         Role role = roleRepo.findByName(roleName);
-        //user.getRoles().add(role);
+        user.getRoles().add(role);
     }
 
     @Override
@@ -193,7 +193,6 @@ public class UserServiceimpl implements UserService {
             throw new RuntimeException("OTP is expired");
         }
     }
-
     @Override
     public OTP retrieveNewOTP(User user) {
         OTP otp = getOTPByUser(user);
@@ -246,5 +245,50 @@ public class UserServiceimpl implements UserService {
         List<SimpleGrantedAuthority> authorities =new ArrayList<>();
         user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getName())));
         return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), true, true, true, user.isActive(), authorities);
+    }
+    @Override
+    public Object sendFogotPasswordMail(String email) {
+        User user = userRepo.findByEmail(email);
+        if (user == null) {
+            throw new UsernameNotFoundException("Email không tồn tại trong hệ thống");
+        }
+        Random random = new Random();
+
+        String password = random.ints(97, 123)
+                .limit(6)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+        user.setPassword(passwordEncoder.encode(password));
+        userRepo.save(user);
+        emailService.sendSimpleMessage(user.getEmail(),
+                "Link FogotPassword",
+                "Mật khẩu mới của bạn là: "+ password);
+        return ResponseEntity.ok().body("check token in mail");
+    }
+    @Override
+    public User createUser(UserSignupDTO userSignupDTO) {
+        return User.builder()
+                .fullName(userSignupDTO.getFullName())
+                .email(userSignupDTO.getEmail())
+                .phoneNumber(userSignupDTO.getPhoneNumber())
+                .homeTown(userSignupDTO.getHomeTown())
+                .gender(userSignupDTO.getGender())
+                .userName(userSignupDTO.getUserName())
+                .password(passwordEncoder.encode(userSignupDTO.getPassword()))
+                .build();
+
+    }
+    @Override
+    public Object getAllJE(){
+        return   userRepo.getAllJE();
+    }
+    @Override
+    public Object getProfileUser(HttpServletRequest request){
+        String authorHeader =request.getHeader("Authorization");
+        String token =authorHeader.substring("Bearer ".length());
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());// truongbb - secret key không nên fix cứng như này, nên mã hóa 1 lớp và để ở config
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT =verifier.verify(token);
+        return  decodedJWT.getClaim("roles").asArray(String.class);
     }
 }

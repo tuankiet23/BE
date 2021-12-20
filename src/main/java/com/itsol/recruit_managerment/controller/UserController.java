@@ -1,25 +1,40 @@
 package com.itsol.recruit_managerment.controller;
 
 
+import com.itsol.recruit_managerment.constant.Constants;
 import com.itsol.recruit_managerment.dto.PasswordDTO;
+import com.itsol.recruit_managerment.dto.UserSignupDTO;
 import com.itsol.recruit_managerment.email.EmailServiceImpl;
 import com.itsol.recruit_managerment.model.OTP;
 import com.itsol.recruit_managerment.model.User;
+import com.itsol.recruit_managerment.security.AuthenFilter;
 import com.itsol.recruit_managerment.service.impl.ProfilesServiceimpl;
 import com.itsol.recruit_managerment.service.impl.UserServiceimpl;
+import com.itsol.recruit_managerment.vm.FogotPasswordVM;
 import com.itsol.recruit_managerment.vm.UserVM;
+import com.sun.mail.iap.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
-
+import javax.naming.AuthenticationException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user")
+@CrossOrigin (origins = "http://localhost:4200")
 public class UserController {
     @Autowired
     private UserServiceimpl userService;
@@ -27,9 +42,12 @@ public class UserController {
     private  EmailServiceImpl emailService;
     @Autowired
     private ProfilesServiceimpl  profilesServiceimpl;
+    private AuthenticationManager authenticationManager;
+    private AuthenFilter authenFilter;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-
-
+    private Response response;
     @GetMapping("/all")
     public List<User> getAll(){
         return userService.getData();
@@ -41,7 +59,6 @@ public class UserController {
             return  ResponseEntity.badRequest().body(result.getAllErrors());
         }
         try {
-            userService.validateUser(userVM);
             userService.add(userVM);
 
             return  ResponseEntity.ok().body(userVM);
@@ -51,20 +68,25 @@ public class UserController {
         }
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@PathVariable Long id , @RequestBody UserVM userVM) {
+    public ResponseEntity<Object> update(@PathVariable Long id , @RequestBody UserSignupDTO userSignupDTO) {
         try {
-            userService.validateUser(userVM);
-            userService.update(userVM,id);
-            return  ResponseEntity.ok().body(userVM);
+            userService.update(userSignupDTO,id);
+            return  ResponseEntity.ok().body(userSignupDTO);
         }catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.badRequest().body("failed to update user");
         }
 
     }
-    @DeleteMapping("/{id}")
-    public int delete(@PathVariable Long id ) {
-        return userService.deleteById(id);
+    @PutMapping("/delete/{id}")
+    public ResponseEntity<Object> delete(@PathVariable Long id ) {
+        try {
+            userService.delete(id);
+            return  ResponseEntity.ok().body("xóa thành công");
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("failed to update user");
+        }
     }
     @GetMapping("/search/{fullName}")
     public  List<User> search(@PathVariable String fullName){
@@ -84,13 +106,13 @@ public class UserController {
         }
     }
 
-    @PostMapping("/users/info/change-password")
+    @PostMapping("/info/change-password")
     public ResponseEntity<String> changePasswordRequest(@RequestBody PasswordDTO passwordDTO){
         User user = userService.loadUserFromContext();
         try {
             if(userService.verifyPassword(user, passwordDTO)){
                 OTP otp = userService.retrieveNewOTP(user);
-                emailService.sendSimpleMessage(user.getUserName(),
+                emailService.sendSimpleMessage(user.getEmail(),
                         "Change password",
                         "OTP: " + otp.getCode() + "\nNew password: " + passwordDTO.getNewPassword());
                 return ResponseEntity.ok().body("Check mail for OTP to commit changing");
@@ -114,19 +136,37 @@ public class UserController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @PutMapping("/fogotpass")
+    public ResponseEntity<String> fogotPassword(@RequestBody FogotPasswordVM fogotPasswordVM){
+        return (ResponseEntity<String>) userService.sendFogotPasswordMail(fogotPasswordVM.getEmail());
+    }
+    @GetMapping("/getProfile")
+    public   ResponseEntity getProfile(HttpServletRequest request){
+        return ResponseEntity.ok().body(userService.getProfileUser(request));
 
-//    @PostMapping("/login")
-//    public ResponseEntity<?> login(@RequestBody User user) {
-//        UserPrincipal userPrincipal = userService.findByUsername(user.getUsername());
-//        if (null == user || !new BCryptPasswordEncoder().matches(user.getPassword(), userPrincipal.getPassword())) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("tài khoản hoặc mật khẩu không chính xác");
+    }
+
+//    @PostMapping("/authenticate")
+//    public @ResponseBody
+//    ResponseEntity<String>  createAuthenticationTokenAndRole(@RequestBody UserSignupDTO form) {
+//        try {
+//            authenticationManager.authenticate(
+//                    new UsernamePasswordAuthenticationToken(form.getUserName(), form.getPassword())
+//            );
+//        } catch (RuntimeException e) {
+//            return ResponseEntity.internalServerError().body(e.getMessage());
 //        }
-//        TokenAuthen token = new TokenAuthen();
-//        token.setToken(jwtUtil.generateToken(userPrincipal));
-//        token.setTokenExpDate(jwtUtil.generateExpirationDate());
-//        token.setCreatedBy(userPrincipal.getUserId());
-//        tokenService.createToken(token);
-//        return ResponseEntity.ok(token.getToken());
+//        final UserDetails userDetails = userDetailsService
+//                .loadUserByUsername(form.getUserName());
+//        final String jwt = authenFilter.generateToken(userDetails);
+//        final List<String> roles = new ArrayList<>();
+//        userDetails.getAuthorities().stream().forEach(grantedAuthority -> {
+//            roles.add(grantedAuthority.getAuthority());
+//        });
+//        Map<String, Object> data = new HashMap<>();
+//        data.put("jwt", jwt);
+//        data.put("roles", roles);
+//         return ResponseEntity.ok().body("Login thanh cong");
 //    }
 
 }
