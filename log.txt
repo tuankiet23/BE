@@ -1,3 +1,4 @@
+
 19-12-2021 21:15:19.617 [35m[restartedMain][0;39m [34mINFO [0;39m com.itsol.recruit_managerment.RecruitManagermentApplication.logStarting - Starting RecruitManagermentApplication using Java 11.0.13 on DESKTOP-KJNF2QE with PID 584 (C:\Users\Admin\Desktop\BE\target\classes started by Admin in C:\Users\Admin\Desktop\BE)
 19-12-2021 21:15:19.623 [35m[restartedMain][0;39m [34mINFO [0;39m com.itsol.recruit_managerment.RecruitManagermentApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
 19-12-2021 21:15:19.687 [35m[restartedMain][0;39m [34mINFO [0;39m org.springframework.boot.devtools.restart.ChangeableUrls.logTo - The Class-Path manifest attribute in C:\Users\Admin\Downloads\ojdbc8-19.3.0.0.jar referenced one or more files that do not exist: file:/C:/Users/Admin/Downloads/oraclepki.jar

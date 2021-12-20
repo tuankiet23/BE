@@ -1,5 +1,6 @@
 package com.itsol.recruit_managerment.service;
 
+import com.itsol.recruit_managerment.dto.JobHomeDTO;
 import com.itsol.recruit_managerment.model.Job;
 import com.itsol.recruit_managerment.utils.ModJob;
 import com.itsol.recruit_managerment.vm.JobVM;
@@ -21,5 +22,7 @@ public interface JobService {
 
 //    List<Job> searchJobs(JobVM jobVM);
 
-    List<Job> searchJobs(int modJob);
+    List<Job> getJobsWithCondition(int modJob, int startrow, int endrow);
+
+    JobHomeDTO jobHome();
 }
