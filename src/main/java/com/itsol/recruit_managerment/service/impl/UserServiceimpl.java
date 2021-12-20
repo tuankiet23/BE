@@ -15,6 +15,10 @@ import com.itsol.recruit_managerment.service.UserService;
 import com.itsol.recruit_managerment.utils.CommonConst;
 import com.itsol.recruit_managerment.vm.UserVM;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -84,17 +88,15 @@ public class UserServiceimpl implements UserService {
 
 
     public int update(UserSignupDTO userSignupDTO, Long id) {
-        User newUser = new User();
+        User newUser = iUserRespository.findById(id).get();
         try {
-
-            newUser.setId(id);
             newUser.setGender(userSignupDTO.getGender());
             newUser.setEmail(userSignupDTO.getEmail());
             newUser.setHomeTown(userSignupDTO.getHomeTown());
             newUser.setPhoneNumber(userSignupDTO.getPhoneNumber());
             newUser.setFullName(userSignupDTO.getFullName());
             newUser.setUserName(userSignupDTO.getUserName());
-            newUser.setPassword(passwordEncoder.encode(userSignupDTO.getPassword()));
+//            newUser.setPassword(passwordEncoder.encode(userSignupDTO.getPassword()));
             newUser.setActive(true);
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             try {
@@ -263,10 +265,11 @@ public class UserServiceimpl implements UserService {
         emailService.sendSimpleMessage(user.getEmail(),
                 "Link FogotPassword",
                 "Mật khẩu mới của bạn là: "+ password);
-        return ResponseEntity.ok().body("check token in mail");
+        return ResponseEntity.ok().body("check password in mail");
     }
     @Override
     public User createUser(UserSignupDTO userSignupDTO) {
+        System.out.println(userSignupDTO);;
         return User.builder()
                 .fullName(userSignupDTO.getFullName())
                 .email(userSignupDTO.getEmail())
@@ -290,5 +293,17 @@ public class UserServiceimpl implements UserService {
         JWTVerifier verifier = JWT.require(algorithm).build();
         DecodedJWT decodedJWT =verifier.verify(token);
         return  decodedJWT.getClaim("roles").asArray(String.class);
+    }
+    @Override
+    public Page<User> getAllUser(Integer page, Integer size){
+        try {
+            Pageable pageable = PageRequest.of(page,size);
+            return userRepo.findAll(pageable);
+        }catch (Exception e){
+
+
+        }
+       return null;
+
     }
 }

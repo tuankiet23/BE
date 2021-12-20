@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.naming.AuthenticationException;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -48,10 +49,10 @@ public class UserController {
     private UserDetailsService userDetailsService;
 
     private Response response;
-    @GetMapping("/all")
-    public List<User> getAll(){
-        return userService.getData();
-    }
+//    @GetMapping("/all")
+//    public List<User> getAll(){
+//        return userService.getData();
+//    }
 
     @PostMapping()
     public ResponseEntity<Object> add(@Valid @RequestBody UserVM userVM, BindingResult result) {
@@ -67,17 +68,17 @@ public class UserController {
             return ResponseEntity.badRequest().body("failed to create user");
         }
     }
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@PathVariable Long id , @RequestBody UserSignupDTO userSignupDTO) {
-        try {
-            userService.update(userSignupDTO,id);
-            return  ResponseEntity.ok().body(userSignupDTO);
-        }catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body("failed to update user");
-        }
-
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<Object> update(@PathVariable Long id , @RequestBody UserSignupDTO userSignupDTO) {
+//        try {
+//            userService.update(userSignupDTO,id);
+//            return  ResponseEntity.ok().body(userSignupDTO);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            return ResponseEntity.badRequest().body("failed to update user");
+//        }
+//
+//    }
     @PutMapping("/delete/{id}")
     public ResponseEntity<Object> delete(@PathVariable Long id ) {
         try {
@@ -145,6 +146,7 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getProfileUser(request));
 
     }
+
 
 //    @PostMapping("/authenticate")
 //    public @ResponseBody

@@ -3,6 +3,7 @@ import com.itsol.recruit_managerment.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Column;
 import java.util.Date;
@@ -22,4 +23,5 @@ public class UserSignupDTO {
     private String birthDay;
     private  String active;
     private Set<Role> roles;
+
 }

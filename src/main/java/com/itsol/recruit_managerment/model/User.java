@@ -3,6 +3,7 @@ package com.itsol.recruit_managerment.model;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.Type;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -47,7 +48,6 @@ public class User implements Serializable {
 
     @Column(name = "BIRTH_DAY")
     Date birthDay;
-
     @Column(name = "IS_DELETE")
     int isDelete;
     @ManyToMany(fetch = FetchType.EAGER)
