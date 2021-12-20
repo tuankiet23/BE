@@ -37,7 +37,7 @@ public class UserJobRepositoryImpl extends BaseRepository implements UserJobRepo
     @Autowired
     StatusJobRepoJPA statusJobRepoJPA;
     @Override
-    public List<Job> searchJobs(int modJob, int p_startrow, int p_endrow) {
+    public List<Job> getListJobWithCondition(int modJob, int p_startrow, int p_endrow) {
         try {
             String query = SqlReader.getSqlQueryById(SqlReader.USER_HOME_MODULE, "list_job_home");
             Map<String, Object> parameters = new HashMap<>();
@@ -65,6 +65,8 @@ public class UserJobRepositoryImpl extends BaseRepository implements UserJobRepo
         }
         return null;
     }
+
+
 
 
     class JobMapper implements RowMapper<Job> {

@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface UserJobRepository {
 
-    List<Job> searchJobs(int modjob, int pOffset, int pageSize);
+    List<Job> getListJobWithCondition(int modjob, int pOffset, int pageSize);
 
 }
