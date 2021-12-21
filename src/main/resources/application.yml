@@ -36,15 +36,14 @@ server:
 spring:
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
-
-#    url: jdbc:oracle:thin:@localhost:1521:sa
-#    username: GIAP12345
-#    password: 12345
+    url: jdbc:oracle:thin:@localhost:1521:qlsvitsol
+    username: GIAP12345
+    password: 12345
 
 #    url: jdbc:oracle:thin:@localhost:1521:xe
-    url: jdbc:oracle:thin:@localhost:1521:ORCL
-    username: ITSOLDEMO
-    password: phamtuankiet
+#    url: jdbc:oracle:thin:@localhost:1521:ORCL
+#    username: ITSOLDEMO
+#    password: phamtuankiet
 
 #    url: jdbc:oracle:thin:@localhost:1521:sa
 #    username: ITSOLDEMO2
