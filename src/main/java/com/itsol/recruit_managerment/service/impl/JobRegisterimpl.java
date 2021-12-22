@@ -10,21 +10,15 @@ import com.itsol.recruit_managerment.model.User;
 import com.itsol.recruit_managerment.repositories.BaseRepository;
 import com.itsol.recruit_managerment.repositories.IUserRespository;
 import com.itsol.recruit_managerment.repositories.JobRegisterRepo;
-
-//import com.itsol.recruit_managerment.repositories.JobRepo;
 import com.itsol.recruit_managerment.repositories.ProfileStatusRepo;
 import com.itsol.recruit_managerment.service.JobRegisterService;
 import com.itsol.recruit_managerment.utils.SqlReader;
 import com.itsol.recruit_managerment.vm.JobRegisterVM;
 import com.itsol.recruit_managerment.vm.SearchJobRegisterVM;
-import lombok.AllArgsConstructor;
 import com.itsol.recruit_managerment.repositories.jpa.JobRepoJPA;
-import com.itsol.recruit_managerment.service.JobRegisterService;
-import com.itsol.recruit_managerment.service.Task;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -91,7 +85,6 @@ public class JobRegisterimpl extends BaseRepository implements  JobRegisterServi
         try{
             JobRegister jobRegister=convert(jobRegisterVM);
             jobRegisterRepo.save(jobRegister);
-            System.out.println(jobRegisterVM.getProfilestatus());
             if(jobRegisterVM.getProfilestatus().compareTo("1")==0)
                 emailService.sendSimpleMessage(jobRegister.getUser().getUserName(),
                         "Thư mời phỏng vấn",
@@ -142,30 +135,45 @@ public class JobRegisterimpl extends BaseRepository implements  JobRegisterServi
     }
 
     @Override
-    public List<JobRegister> searchJobRegister(SearchJobRegisterVM searchJobRegisterVM) {
+    public List<JobRegister> searchJobRegister(SearchJobRegisterVM searchJobRegisterVM, Integer pageIndex, Integer pageSize) {
         try {
             String query = SqlReader.getSqlQueryById(SqlReader.ADMIN_MODULE, "search");
             Map<String, Object> parameters = new HashMap<>();
             if (!ObjectUtils.isEmpty(searchJobRegisterVM.getFullName())) {
-                query += "and users.full_name like :p_name";
+                query += " and users.full_name like :p_name";
                 parameters.put("p_name", searchJobRegisterVM.getFullName());
             }
             if (!ObjectUtils.isEmpty(searchJobRegisterVM.getJobName())) {
-                query += "and jobs.job_name like :p_job_name";
+                query += " and jobs.job_name like :p_job_name";
                 parameters.put("p_job_name", searchJobRegisterVM.getJobName());
             }
             if (!ObjectUtils.isEmpty(searchJobRegisterVM.getPhoneNumber())) {
-                query += "and users.phone_number like :p_phone_number";
+                query += " and users.phone_number like :p_phone_number";
                 parameters.put("p_phone_number", searchJobRegisterVM.getPhoneNumber());
             }
             if (!ObjectUtils.isEmpty(searchJobRegisterVM.getDateInterview())) {
-                query += "and job_register.date_interview = TO_DATE(:p_date_interview, 'yyyy-MM-dd')";
+                query += " and to_char(job_register.date_interview, 'yyyy-MM-dd') = :p_date_interview";
                 parameters.put("p_date_interview", searchJobRegisterVM.getDateInterview());
             }
-            if (!ObjectUtils.isEmpty(searchJobRegisterVM.getDateInterview())) {
-                query += "and job_register.DATE_REGISTER = TO_DATE(:p_date_register, 'yyyy-MM-dd')";
+            if (!ObjectUtils.isEmpty(searchJobRegisterVM.getDateRegister())) {
+                query += " and to_char(job_register.DATE_REGISTER, 'yyyy-MM-dd') = T:p_date_register";
                 parameters.put("p_date_register", searchJobRegisterVM.getDateRegister());
             }
+            Integer p_startrow;
+            Integer p_endrow;
+            if(pageIndex==0)
+            {
+                 p_startrow=pageSize*pageIndex;
+                 p_endrow=p_startrow+pageSize;
+            }
+            else {
+                p_startrow=pageSize*pageIndex+1;
+                p_endrow=p_startrow+pageSize-1;
+            }
+
+                query += " ) tabWithRownum where tabWithRownum.ROWNR BETWEEN  :p_startrow and :p_endrow";
+                parameters.put("p_startrow", p_startrow);
+                parameters.put("p_endrow", p_endrow);
 
             return getNamedParameterJdbcTemplate().query(query, parameters, new JobRegisterMapper());
         } catch (Exception ex) {
@@ -178,12 +186,18 @@ public class JobRegisterimpl extends BaseRepository implements  JobRegisterServi
         try{
             JobRegister jobRegister;
             jobRegister=jobRegisterRepo.getById(Long.parseLong(jobRegisterVM.getId()));
-            Long idp=Long.parseLong(jobRegisterVM.getId());
-            ProfileStatus profileStatus=profileStatusRepo.getById(idp);
-    //            jobRegister.setProfileStatus(profileStatus);
-            SimpleDateFormat sdf = new SimpleDateFormat(DateTimeConstant.YYYYMMDD_FOMART);
-            jobRegister.setDateInterview(sdf.parse(jobRegisterVM.getDateinterview()));
-            jobRegister.setMethodInterview(jobRegisterVM.getMethodinterview());
+            if(jobRegister.getProfileStatus()!=null){
+                Long idp=Long.parseLong(jobRegisterVM.getProfilestatus());
+                ProfileStatus profileStatus=profileStatusRepo.getById(idp);
+                jobRegister.setProfileStatus(profileStatus);
+            }
+            if(jobRegisterVM.getDateinterview()!=null){
+                SimpleDateFormat sdf = new SimpleDateFormat(DateTimeConstant.YYYYMMDD_FOMART);
+                jobRegister.setDateInterview(sdf.parse(jobRegisterVM.getDateinterview()));
+            }
+            if (jobRegisterVM.getMethodinterview()!=null){
+                jobRegister.setMethodInterview(jobRegisterVM.getMethodinterview());
+            }
             return jobRegister;
         }catch (Exception ex)
         {
@@ -197,7 +211,6 @@ public class JobRegisterimpl extends BaseRepository implements  JobRegisterServi
     class JobRegisterMapper implements RowMapper<JobRegister> {
         public JobRegister mapRow(ResultSet rs, int rowNum) throws SQLException {
             JobRegister dto = new JobRegister();
-
             Job job = new Job();
             job.setId(rs.getLong("job_id"));
             dto.setJob(jobRepo.findById(job.getId()).get());
