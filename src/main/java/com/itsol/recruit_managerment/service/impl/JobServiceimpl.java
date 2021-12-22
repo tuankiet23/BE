@@ -3,7 +3,7 @@ package com.itsol.recruit_managerment.service.impl;
 import com.itsol.recruit_managerment.dto.JobHomeDTO;
 import com.itsol.recruit_managerment.model.Job;
 
-import com.itsol.recruit_managerment.repositories.UserJobRepositoryImpl;
+import com.itsol.recruit_managerment.repositories.impl.UserJobRepositoryImpl;
 import com.itsol.recruit_managerment.repositories.jpa.JobRepoJPA;
 import com.itsol.recruit_managerment.service.JobService;
 

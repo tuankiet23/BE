@@ -5,16 +5,18 @@ with time_filtered_job as (
 ), sucess_applicant as (
     select count(jr.id) sucess_applicant
     from time_filtered_job j
-             left join job_register jr on jr.job_id = j.id
-             left join profile_status ps on ps.id = jr.profile_status_id and ps.name = 'P_SUCCESS'
+             INNER join job_register jr on jr.job_id = j.id
+             INNER join profile_status ps on ps.id = jr.profile_status_id and ps.name = 'SUCCESS'
 ), fail_applicant as (
     select count(jr.id) fail_applicant
     from time_filtered_job j
-             left join job_register jr on jr.job_id = j.id
-             left join profile_status ps on ps.id = jr.profile_status_id and ps.name in ('P_REJECT_INTERVIEW', 'P_LOST')
+             INNER join job_register jr on jr.job_id = j.id
+             INNER join profile_status ps on ps.id = jr.profile_status_id and ps.name in ('REJECT','REJECT_INTERVIEW', 'LOST')
 ), total_applicant as (
-    select fail_applicant + sucess_applicant as total_applicant
-    from sucess_applicant, fail_applicant
+    select count(jr.id) total_applicant
+    from time_filtered_job j
+             INNER join job_register jr on jr.job_id = j.id
+             INNER join profile_status ps on ps.id = jr.profile_status_id and ps.name in (select profile_status.name from profile_status)
 )
 select total_applicant,
        sucess_applicant sucess_applicant_quantity,
