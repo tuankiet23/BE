@@ -13,8 +13,8 @@ public class SearchJobRegisterVM {
     String fullName;
     String jobName;
     String phoneNumber;
-    Date dateRegister;
-    Date dateInterview;
+    String dateRegister;
+    String dateInterview;
 
 
 }

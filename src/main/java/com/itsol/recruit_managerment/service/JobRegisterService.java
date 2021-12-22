@@ -18,5 +18,5 @@ public interface JobRegisterService {
     List<JobRegister> getAllJR();
     JobRegister getDetailJR(Long id);
     Object download(String fileName) ;
-    List<JobRegister> searchJobRegister(SearchJobRegisterVM searchJobRegisterVM);
+    List<JobRegister> searchJobRegister(SearchJobRegisterVM searchJobRegisterVM, Integer pageIndex, Integer pageSize);
 }
