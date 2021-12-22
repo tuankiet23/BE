@@ -12,8 +12,19 @@ import java.util.Date;
 public class DashBoardSeviceImpl implements DashboardService {
 
     DashboardRepository dashboardRepository;
+
     @Override
     public Object getStatistics(String formDate, String toDate) {
         return dashboardRepository.getStatistics( formDate,  toDate);
+    }
+
+    @Override
+    public Object getPieChart(String formDate, String toDate) {
+        return dashboardRepository.getPieChar(formDate,toDate);
+    }
+
+    @Override
+    public Object getLineChart(String typeTime, String formDate, String toDate) {
+        return dashboardRepository.getLineChart(typeTime,formDate,toDate);
     }
 }
