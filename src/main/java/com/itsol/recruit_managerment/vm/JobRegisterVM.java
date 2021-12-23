@@ -14,4 +14,5 @@ public class JobRegisterVM {
     String dateinterview;
     String methodinterview;
     String cv;
+    String reason;
 }

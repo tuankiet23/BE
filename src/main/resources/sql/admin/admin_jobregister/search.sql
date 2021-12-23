@@ -1,4 +1,4 @@
-select tabwithrownum.id, tabwithrownum.cv_file, tabwithrownum.date_interview, tabwithrownum.date_register, tabwithrownum.is_delete, tabwithrownum.method_interview, tabwithrownum.job_id, tabwithrownum.profile_status_id, tabwithrownum.user_id
+select tabwithrownum.id, tabwithrownum.cv_file, tabwithrownum.date_interview, tabwithrownum.date_register, tabwithrownum.is_delete, tabwithrownum.method_interview, tabwithrownum.job_id, tabwithrownum.profile_status_id, tabwithrownum.user_id,tabwithrownum.reason
 from
 (select job_register.*, rownum ROWNR
 from job_register, jobs, users, profile_status

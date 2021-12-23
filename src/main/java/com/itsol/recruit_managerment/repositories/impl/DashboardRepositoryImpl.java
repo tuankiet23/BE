@@ -7,8 +7,13 @@ import com.itsol.recruit_managerment.repositories.DashboardRepository;
 import com.itsol.recruit_managerment.utils.BaseRepository;
 import com.itsol.recruit_managerment.utils.SqlReader;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
