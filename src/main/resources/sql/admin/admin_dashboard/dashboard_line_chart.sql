@@ -1,20 +1,20 @@
 with date_range as (
     select
         case
-            when :p_date_group_type='D' or :p_date_group_type='default' then to_date(:p_from_date, 'yyyymmdd')
-            when :p_date_group_type='W' then trunc(to_date(:p_from_date, 'yyyymmdd'),'iw')
-            when :p_date_group_type='M' then trunc(to_date(:p_from_date, 'yyyymmdd'),'mm')
-            when :p_date_group_type='Q' then trunc(to_date(:p_from_date, 'yyyymmdd'),'Q')
-            when :p_date_group_type='Y' then trunc(to_date(:p_from_date, 'yyyymmdd'),'Y')
-            else to_date(:p_from_date, 'yyyymmdd')
+            when :p_date_group_type='D' or :p_date_group_type='default' then to_date(:p_from_date, 'YYYYMMDD')
+            when :p_date_group_type='W' then trunc(to_date(:p_from_date, 'YYYYMMDD'),'iw')
+            when :p_date_group_type='M' then trunc(to_date(:p_from_date, 'YYYYMMDD'),'mm')
+            when :p_date_group_type='Q' then trunc(to_date(:p_from_date, 'YYYYMMDD'),'Q')
+            when :p_date_group_type='Y' then trunc(to_date(:p_from_date, 'YYYYMMDD'),'Y')
+            else to_date(:p_from_date, 'YYYYMMDD')
             end start_date,
         case
-            when :p_date_group_type='D' or :p_date_group_type='default' then to_date(:p_to_date, 'yyyymmdd')
-            when :p_date_group_type='W' then trunc(to_date(:p_to_date, 'yyyymmdd'),'iw') + 7 - 1/86400
-            when :p_date_group_type='M' then last_day (trunc(to_date(:p_to_date, 'yyyymmdd'), 'mm')) + 1 - 1/86400
-            when :p_date_group_type='Q' then trunc(trunc(to_date(:p_to_date, 'yyyymmdd'), 'Q')+93,'mm')- 1/86400
-            when :p_date_group_type='Y' then trunc(trunc(to_date(:p_to_date, 'yyyymmdd'),'Y')+370, 'Y')- 1/86400
-            else to_date(:p_to_date, 'yyyymmdd')
+            when :p_date_group_type='D' or :p_date_group_type='default' then to_date(:p_to_date, 'YYYYMMDD')
+            when :p_date_group_type='W' then trunc(to_date(:p_to_date, 'YYYYMMDD'),'iw') + 7 - 1/86400
+            when :p_date_group_type='M' then last_day (trunc(to_date(:p_to_date, 'YYYYMMDD'), 'MM')) + 1 - 1/86400
+            when :p_date_group_type='Q' then trunc(trunc(to_date(:p_to_date, 'YYYYMMDD'), 'Q')+93,'MM')- 1/86400
+            when :p_date_group_type='Y' then trunc(trunc(to_date(:p_to_date, 'YYYYMMDD'),'Y')+370, 'Y')- 1/86400
+            else to_date(:p_to_date, 'YYYYMMDD')
             end end_date,
         case
             when :p_date_group_type='D' or :p_date_group_type='default' then 1

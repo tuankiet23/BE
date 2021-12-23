@@ -1,6 +1,7 @@
-package com.itsol.recruit_managerment.repositories;
+package com.itsol.recruit_managerment.repositories.impl;
 
 import com.itsol.recruit_managerment.model.*;
+import com.itsol.recruit_managerment.repositories.*;
 import com.itsol.recruit_managerment.repositories.jpa.MethodWorkRepoJPA;
 import com.itsol.recruit_managerment.repositories.jpa.StatusJobRepoJPA;
 import com.itsol.recruit_managerment.utils.CommonConst;

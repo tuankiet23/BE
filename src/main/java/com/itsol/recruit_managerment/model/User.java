@@ -3,10 +3,12 @@ package com.itsol.recruit_managerment.model;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.Type;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -42,12 +44,17 @@ public class User implements Serializable {
     @Column(name = "HOME_TOWN")
     String homeTown;
 
+    @Column(name = "AVATAR")
+    @Lob
+    byte[] avatar;
+    @Column(name = "AVATAR_NAME")
+    String avatarName;
+
     @Column(name = "GENDER")
     String gender;
 
     @Column(name = "BIRTH_DAY")
     Date birthDay;
-
     @Column(name = "IS_DELETE")
     int isDelete;
     @ManyToMany(fetch = FetchType.EAGER)

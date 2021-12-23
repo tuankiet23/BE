@@ -19,5 +19,7 @@ public interface IUserRespository extends JpaRepository<User,Long> {
     List<User> findByFullName(@Param("fullName") String fullName);
     @Query(nativeQuery = true,value = "select * from users u where u.id in (select USERS_ID from USERS_ROLES r where r.ROLES_ID = 3)")
     List<User> getAllJE();
+    @Query(nativeQuery = true , value = "select * from users u where  u.id in (select USERS_ID from USERS_ROLES r where r.ROLES_ID = 1)")
+    List<User> findAll();
 
 }

@@ -21,5 +21,18 @@ public class DashBoardControler {
 
         return dashboardService.getStatistics(fromDate, toDate);
     }
+    @CrossOrigin
+    @GetMapping("/piechart")
+    public  Object getPieChart(@RequestParam("from-date") String fromDate, @RequestParam("to-date")String toDate){
+
+        return dashboardService.getPieChart(fromDate, toDate);
+    }
+
+    @CrossOrigin
+    @GetMapping("/linechart")
+    public  Object getLineChart(@RequestParam("type-time") String typeTime, @RequestParam("from-date") String fromDate, @RequestParam("to-date")String toDate){
+
+        return dashboardService.getLineChart(typeTime, fromDate, toDate);
+    }
 
 }

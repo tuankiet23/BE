@@ -13,6 +13,7 @@ import com.itsol.recruit_managerment.service.UserService;
 import com.itsol.recruit_managerment.service.impl.UserServiceimpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
@@ -88,6 +89,10 @@ public class AdminController {
     public Object getAllJe() {
         return userService.getAllJE();
     }
+    @GetMapping("/getallUser")
+    public Object getAllUser(){
+        return userService.getAllUser();
+    }
     @GetMapping("/getje/{id}")
     public User getJeById(@PathVariable("id")  Long id) {
         return adminService.findById(id).get();
@@ -104,7 +109,7 @@ public class AdminController {
         }
     }
 
-    @PutMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Object> delete(@PathVariable Long id) {
         try {
             adminService.delete(id);
