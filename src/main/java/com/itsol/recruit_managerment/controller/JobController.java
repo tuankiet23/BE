@@ -2,8 +2,6 @@ package com.itsol.recruit_managerment.controller;
 
 import com.itsol.recruit_managerment.model.Job;
 import com.itsol.recruit_managerment.service.JobService;
-import com.itsol.recruit_managerment.utils.CommonConst;
-import com.itsol.recruit_managerment.vm.JobVM;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -83,8 +81,8 @@ public class JobController {
 
     @CrossOrigin
     @GetMapping("/home-page")
-    public List<Job>searchJob(@RequestParam("modjob") int modJob) {
-        return jobService.searchJobs(modJob);
+    public List<Job>getJobsWithCondition(@RequestParam("modjob") int modJob , @RequestParam("startrow") int startrow, @RequestParam("endrow") int endrow) {
+        return jobService.getJobsWithCondition(modJob, startrow, endrow);
     }
 
     @CrossOrigin

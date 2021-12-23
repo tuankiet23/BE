@@ -2,6 +2,7 @@ package com.itsol.recruit_managerment.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
@@ -14,6 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "job_register")
+@Getter
 public class JobRegister implements  Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "JOBREG_SEQ")
@@ -44,6 +46,7 @@ public class JobRegister implements  Serializable {
 
     @Column(name = "cv_file")
     private String cv;
+
 
     @Column(name = "IS_DELETE")
     @Type(type = "org.hibernate.type.NumericBooleanType")

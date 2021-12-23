@@ -1,14 +1,13 @@
 package com.itsol.recruit_managerment.service.impl;
 
+import com.itsol.recruit_managerment.dto.JobHomeDTO;
 import com.itsol.recruit_managerment.model.Job;
 
-import com.itsol.recruit_managerment.repositories.UserJobRepositoryImpl;
+import com.itsol.recruit_managerment.repositories.impl.UserJobRepositoryImpl;
 import com.itsol.recruit_managerment.repositories.jpa.JobRepoJPA;
 import com.itsol.recruit_managerment.service.JobService;
 
 
-import com.itsol.recruit_managerment.utils.ModJob;
-import com.itsol.recruit_managerment.vm.JobVM;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -64,8 +63,14 @@ public class JobServiceimpl implements JobService {
     }
 
     @Override
-    public List<Job> searchJobs( int modJob) {
-        return userJobRepository.searchJobs(modJob) ;
+    public List<Job> getJobsWithCondition(int modJob, int startRow, int endRow) {
+        return userJobRepository.getListJobWithCondition(modJob, startRow, endRow) ;
     }
+
+    @Override
+    public JobHomeDTO jobHome() {
+        return null;
+    }
+
 
 }
