@@ -21,6 +21,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletContext;
+import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Set;
@@ -42,12 +44,14 @@ public class AccountController {
     AccountActivationConfig accountActivationConfig;
     @Autowired
     UserServiceimpl userServiceimpl;
-    @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody UserSignupDTO userSignupDTO) {
+    @Autowired
+    ServletContext application;
 
-        Role role = roleRepo.findByName("ROLE_USER"); // truongbb - đưa vào constant
-        // truongbb - role null thì sao?
-        // không dùng set từng trường 1 như thế này ==> SOLUTION: dùng builder, tách riêng việc tạo object user ra 1 hàm
+    @PostMapping("/signup")
+    public ResponseEntity<String> signup(@RequestBody(required = false) UserSignupDTO userSignupDTO) {
+        Role role = roleRepo.findByName("ROLE_USER");
+        System.out.println("1111111111111111111111111111");
+        System.out.println(userSignupDTO);
         User user = userServiceimpl.createUser(userSignupDTO);
         if (ObjectUtils.isEmpty(user)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -65,7 +69,6 @@ public class AccountController {
         user.setIsDelete(0); //  0 => deleted = false
         userService.saveUser(user);
         OTP otp = userService.generateOTP(user);
-        // truongbb - không fix cứng url như thế này ==> đưa vào config ở yml
         String linkActive = accountActivationConfig.getActivateUrl() + user.getId();
         emailService.sendSimpleMessage(user.getEmail(),
                 "Link active account",

@@ -17,10 +17,9 @@ public class EmailServiceImpl {
 
     private final JavaMailSender mailSender;
 
-    public void sendSimpleMessage(String to, String subject, String msg){
+    public void sendSimpleMessage(String to, String subject, String msg) {
 //        SimpleMailMessage mailMessage = new SimpleMailMessage();
         try {
-
             MimeMessage message = mailSender.createMimeMessage();
 
             message.setSubject(subject);

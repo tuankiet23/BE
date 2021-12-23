@@ -27,7 +27,7 @@ public class AdminService {
             newUser.setPhoneNumber(userSignupDTO.getPhoneNumber());
             newUser.setFullName(userSignupDTO.getFullName());
             newUser.setUserName(userSignupDTO.getUserName());
-            newUser.setPassword(userSignupDTO.getPassword());
+//            newUser.setPassword(userSignupDTO.getPassword());
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             try {
                 newUser.setBirthDay(sdf.parse(userSignupDTO.getBirthDay()));

@@ -4,11 +4,15 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itsol.recruit_managerment.repositories.IUserRespository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.yaml.snakeyaml.events.Event;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -23,6 +27,8 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 
 public class AuthorFilter extends OncePerRequestFilter {
+    @Autowired
+    IUserRespository iUserRespository;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authorHeader =request.getHeader("Authorization");
@@ -34,6 +40,9 @@ public class AuthorFilter extends OncePerRequestFilter {
                 DecodedJWT decodedJWT =verifier.verify(token);
                 String username = decodedJWT.getSubject();
                 String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
+//                String userID = decodedJWT.getId();
+//                iUserRespository.getUserById( );
+//                new ObjectMapper().writeValue(response.getOutputStream(), userID);
                 List<GrantedAuthority> authorities = new ArrayList<>();
                 stream(roles).forEach(role -> authorities.add(new SimpleGrantedAuthority(role)));
                 UsernamePasswordAuthenticationToken authenticationToken =
