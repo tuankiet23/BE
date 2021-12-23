@@ -46,8 +46,9 @@ public class AccountController {
     UserServiceimpl userServiceimpl;
     @Autowired
     ServletContext application;
+
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody UserSignupDTO userSignupDTO) {
+    public ResponseEntity<String> signup(@RequestBody(required = false) UserSignupDTO userSignupDTO) {
         Role role = roleRepo.findByName("ROLE_USER");
         System.out.println("1111111111111111111111111111");
         System.out.println(userSignupDTO);

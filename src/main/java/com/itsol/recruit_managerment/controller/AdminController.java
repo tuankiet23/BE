@@ -90,9 +90,8 @@ public class AdminController {
         return userService.getAllJE();
     }
     @GetMapping("/getallUser")
-    public Page<User> getAllUser(@PathVariable("page")Integer page , @PathVariable("size") Integer size){
-
-        return userService.getAllUser( page,  size);
+    public Object getAllUser(){
+        return userService.getAllUser();
     }
     @GetMapping("/getje/{id}")
     public User getJeById(@PathVariable("id")  Long id) {

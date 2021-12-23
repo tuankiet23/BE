@@ -7,8 +7,10 @@ import com.itsol.recruit_managerment.model.Role;
 import com.itsol.recruit_managerment.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,5 +55,9 @@ public interface UserService extends UserDetailsService {
 
     Object getProfileUser(HttpServletRequest request);
 
-    Page<User> getAllUser(Integer pageIndex,Integer pagesize);
+    Object getAllUser();
+
+    User store(MultipartFile file, Long id) throws IOException;
+
+    User getFile(Long id);
 }
