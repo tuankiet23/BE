@@ -8,12 +8,14 @@ import com.itsol.recruit_managerment.utils.ModJob;
 import com.itsol.recruit_managerment.utils.SqlReader;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 @Slf4j
+@Repository
 public class DashboardRepositoryImpl extends BaseRepository implements DashboardRepository {
 
 

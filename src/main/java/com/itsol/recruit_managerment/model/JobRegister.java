@@ -47,10 +47,10 @@ public class JobRegister implements  Serializable {
     @Column(name = "cv_file")
     private String cv;
 
+    @Column(name = "reason")
+    private String reason;
 
     @Column(name = "IS_DELETE")
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private Boolean isDelete;
-
-
 }
