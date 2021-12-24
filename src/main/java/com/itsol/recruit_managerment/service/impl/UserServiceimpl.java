@@ -234,8 +234,8 @@ public class UserServiceimpl implements UserService {
     }
 
     @Override
-    public void changePassword(String password, User user) {
-        user.setPassword(passwordEncoder.encode(password));
+    public void changePassword( User user) {
+        user.setPassword(passwordEncoder.encode(user.getNewPassword()));
     }
 
     @Override

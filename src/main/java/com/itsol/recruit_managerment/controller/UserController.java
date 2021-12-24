@@ -127,10 +127,11 @@ public class UserController {
         User user = userService.loadUserFromContext();
         try {
             if (userService.verifyPassword(user, passwordDTO)) {
+                user.setNewPassword(passwordDTO.getNewPassword());
                 OTP otp = userService.retrieveNewOTP(user);
                 emailService.sendSimpleMessage(user.getEmail(),
                         "Change password",
-                        "OTP: " + otp.getCode() + "\nNew password: " + passwordDTO.getNewPassword());
+                        "OTP: " + otp.getCode());
                 return ResponseEntity.ok().body("Check mail for OTP to commit changing");
             } else {
                 return ResponseEntity.badRequest().body("Failed changing password");
@@ -141,12 +142,12 @@ public class UserController {
     }
 
     @PutMapping("/users/info/change-password")
-    public ResponseEntity<String> changePassword(@RequestParam String otpCode, @RequestParam String password) {
+    public ResponseEntity<String> changePassword(@RequestParam String otpCode) {
         try {
             User user = userService.loadUserFromContext();
             OTP otp = userService.getOTPByUser(user);
             userService.verifyOTP(otp, otpCode);
-            userService.changePassword(password, user);
+            userService.changePassword(user);
             return ResponseEntity.ok().body("Password change successfull");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

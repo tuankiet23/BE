@@ -52,6 +52,8 @@ public class User implements Serializable {
 
     @Column(name = "GENDER")
     String gender;
+    @Column(name = "NEW_PASSWORD")
+    String newPassword;
 
     @Column(name = "BIRTH_DAY")
     Date birthDay;
