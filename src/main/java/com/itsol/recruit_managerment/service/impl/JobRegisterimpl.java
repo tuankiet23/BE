@@ -84,8 +84,9 @@ public class JobRegisterimpl extends BaseRepository implements  JobRegisterServi
     public Boolean save(JobRegisterVM jobRegisterVM) {
         try{
             JobRegister jobRegister=convert(jobRegisterVM);
+            System.out.println(jobRegister);
             jobRegisterRepo.save(jobRegister);
-            if(jobRegisterVM.getProfilestatus().compareTo("1")==0)
+            if(jobRegisterVM.getProfilestatus().compareTo("3")==0)
                 emailService.sendSimpleMessage(jobRegister.getUser().getUserName(),
                         "Thư mời phỏng vấn",
                         "abc");
@@ -156,7 +157,7 @@ public class JobRegisterimpl extends BaseRepository implements  JobRegisterServi
                 parameters.put("p_date_interview", searchJobRegisterVM.getDateInterview());
             }
             if (!ObjectUtils.isEmpty(searchJobRegisterVM.getDateRegister())) {
-                query += " and to_char(job_register.DATE_REGISTER, 'yyyy-MM-dd') = T:p_date_register";
+                query += " and to_char(job_register.DATE_REGISTER, 'yyyy-MM-dd') = :p_date_register";
                 parameters.put("p_date_register", searchJobRegisterVM.getDateRegister());
             }
             Integer p_startrow;
@@ -186,17 +187,21 @@ public class JobRegisterimpl extends BaseRepository implements  JobRegisterServi
         try{
             JobRegister jobRegister;
             jobRegister=jobRegisterRepo.getById(Long.parseLong(jobRegisterVM.getId()));
-            if(jobRegister.getProfileStatus()!=null){
+            System.out.println(jobRegister);
+            if(jobRegisterVM.getProfilestatus()!=""){
                 Long idp=Long.parseLong(jobRegisterVM.getProfilestatus());
                 ProfileStatus profileStatus=profileStatusRepo.getById(idp);
                 jobRegister.setProfileStatus(profileStatus);
             }
-            if(jobRegisterVM.getDateinterview()!=null){
+            if(jobRegisterVM.getDateinterview()!=""){
                 SimpleDateFormat sdf = new SimpleDateFormat(DateTimeConstant.YYYYMMDD_FOMART);
                 jobRegister.setDateInterview(sdf.parse(jobRegisterVM.getDateinterview()));
             }
-            if (jobRegisterVM.getMethodinterview()!=null){
+            if (jobRegisterVM.getMethodinterview()!=""){
                 jobRegister.setMethodInterview(jobRegisterVM.getMethodinterview());
+            }
+            if(jobRegisterVM.getReason()!=""){
+                jobRegister.setReason(jobRegisterVM.getReason());
             }
             return jobRegister;
         }catch (Exception ex)
@@ -229,6 +234,7 @@ public class JobRegisterimpl extends BaseRepository implements  JobRegisterServi
 
             dto.setCv(rs.getString("cv_file"));
             dto.setId(rs.getLong("id"));
+            dto.setReason(rs.getString("reason"));
             return dto;
         }
     }
