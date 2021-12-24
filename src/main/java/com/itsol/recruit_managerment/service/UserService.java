@@ -41,7 +41,9 @@ public interface UserService extends UserDetailsService {
 
     boolean verifyPassword(User user, PasswordDTO passwordDTO);
 
-    void changePassword(String password, User user);
+    void changePassword( User user);
+
+//    void changePassword(User user);
 
     User loadUserFromContext();
 
