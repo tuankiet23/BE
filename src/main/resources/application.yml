@@ -48,6 +48,13 @@ spring:
 #    url: jdbc:oracle:thin:@localhost:1521:sa
 #    username: ITSOLDEMO2
 #    password: 123456
+
+
+#    url: jdbc:oracle:thin:@localhost:1521:sa
+#    username: ITSOLDEMO2
+#    password: 123456
+
+
 # =======
 #     url: jdbc:oracle:thin:@localhost:1521:qlsvitsol
 #     username: GIAP12345
@@ -89,3 +96,4 @@ logging:
 application:
   active-account:
     active-url: "http://localhost:8080/active/"
+

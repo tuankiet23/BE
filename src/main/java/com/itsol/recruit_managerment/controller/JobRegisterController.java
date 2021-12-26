@@ -6,13 +6,14 @@ import com.itsol.recruit_managerment.vm.JobRegisterVM;
 import com.itsol.recruit_managerment.vm.SearchJobRegisterVM;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
+
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -32,8 +33,11 @@ public class JobRegisterController {
     @Autowired
     JobRegisterService jobRegisterService;
 
-    public static final String DIRECTORY = System.getProperty("C:\\Users\\Admin\\Desktop\\dowload");
+
+    public static final String DIRECTORY = System.getProperty("user.home") + "/Desktop/uploads/";
+
     public static final String CONTENT_DISPOSITION = System.getProperty(".pdf");
+
     @CrossOrigin
     @GetMapping("/{page}/{size}")
     public Page<JobRegister> getAllJobRegister(@PathVariable("page") Integer page, @PathVariable("size") Integer size) {
@@ -116,7 +120,6 @@ public class JobRegisterController {
     inputStream.close();
     outputStream.close();
     }
-
 
 
 }
