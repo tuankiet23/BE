@@ -21,7 +21,6 @@ public class EmailServiceImpl {
 //        SimpleMailMessage mailMessage = new SimpleMailMessage();
         try {
             MimeMessage message = mailSender.createMimeMessage();
-
             message.setSubject(subject);
             MimeMessageHelper helper;
             helper = new MimeMessageHelper(message, true);

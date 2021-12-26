@@ -87,7 +87,8 @@ public class JobRegisterimpl extends BaseRepository implements  JobRegisterServi
             System.out.println(jobRegister);
             jobRegisterRepo.save(jobRegister);
             if(jobRegisterVM.getProfilestatus().compareTo("3")==0)
-                emailService.sendSimpleMessage(jobRegister.getUser().getUserName(),
+
+                emailService.sendSimpleMessage(jobRegister.getUser().getEmail(),
                         "Thư mời phỏng vấn",
                         "abc");
             return true;

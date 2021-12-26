@@ -50,8 +50,6 @@ public class AccountController {
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody(required = false) UserSignupDTO userSignupDTO) {
         Role role = roleRepo.findByName("ROLE_USER");
-        System.out.println("1111111111111111111111111111");
-        System.out.println(userSignupDTO);
         User user = userServiceimpl.createUser(userSignupDTO);
         if (ObjectUtils.isEmpty(user)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

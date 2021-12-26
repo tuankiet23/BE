@@ -66,11 +66,12 @@ public class AuthenFilter extends UsernamePasswordAuthenticationFilter {
         com.auth0.jwt.algorithms.Algorithm algorithm = Algorithm.HMAC256("secret".getBytes()); // truongbb - secret key không nên fix cứng như này, nên mã hóa 1 lớp và để ở config
         String token = JWT.create()
                 .withSubject(userDetails.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 20 * 60 * 1000)) // truongbb - nên để ở config yml
+                .withExpiresAt(new Date(System.currentTimeMillis() + 20 * 60 * 1000))
                 .withClaim("roles", userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
         Map<String, String> tokenObj = new HashMap<>();
         tokenObj.put("token", token);
+        tokenObj.put("username",userDetails.getUsername());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), tokenObj);
     }
