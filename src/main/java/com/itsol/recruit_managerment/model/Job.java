@@ -25,25 +25,25 @@ public class Job {
     @Column(name = "job_name")
     String jobName;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "job_position_id")
     JobPosition jobPosition;
 
     @Column(name = "number_experience ")
     Integer numberExperience;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "method_work_id")
     MethodWork method_work;
 
     @Column(name = "address_work")
     String addressWork;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "academic_level_id")
     AcademicLevel academicLevel ;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "level_id")
     LevelRank levelRank ;
 
@@ -65,21 +65,24 @@ public class Job {
     @Column(name = "interrest")
     String interrest;
 
-    @Column(name = "salary")
-    Integer salary;
+    @Column(name = "salary_max")
+    Integer salaryMax;
 
-    @OneToOne
+    @Column(name = "salary_min")
+    Integer salaryMin;
+
+    @ManyToOne
     @JoinColumn(name = "contact_id")
     User contact;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "status_job_id")
     StatusJob statusJob;
 
     @Column(name = "views")
     Integer views;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "create_id")
     User creater;
 

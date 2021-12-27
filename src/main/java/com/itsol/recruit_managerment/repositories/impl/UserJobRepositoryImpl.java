@@ -84,7 +84,8 @@ public class UserJobRepositoryImpl extends BaseRepository implements UserJobRepo
             dto.setDueDate(rs.getDate("due_date"));
             dto.setStartRecruitmentDate(rs.getDate("start_recruitment_date"));
             dto.setInterrest(rs.getString("interrest"));
-            dto.setSalary(rs.getInt("salary"));
+            dto.setSalaryMax(rs.getInt("salary_max"));
+            dto.setSalaryMin(rs.getInt("salary_min"));
             dto.setSkills(rs.getString("skills"));
             dto.setQtyPerson(rs.getInt("qty_person"));
             dto.setViews(rs.getInt("views"));

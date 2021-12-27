@@ -6,6 +6,7 @@ import com.itsol.recruit_managerment.model.*;
 
 import com.itsol.recruit_managerment.repositories.*;
 
+import com.itsol.recruit_managerment.repositories.impl.JobRepoImpl;
 import com.itsol.recruit_managerment.repositories.impl.UserJobRepositoryImpl;
 
 import com.itsol.recruit_managerment.repositories.jpa.JobRepoJPA;
@@ -15,6 +16,7 @@ import com.itsol.recruit_managerment.service.JobService;
 
 
 import com.itsol.recruit_managerment.utils.SqlReader;
+import com.itsol.recruit_managerment.vm.SearchJobVM;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,8 @@ public class JobServiceimpl extends BaseRepository implements  JobService  {
     JobRepoJPA jobRepo;
 
     UserJobRepositoryImpl userJobRepository;
+
+    JobRepoImpl jobRepoImpl;
 
     @Autowired
     AcademiclevelRepo academiclevelRepo;
@@ -100,37 +104,16 @@ public class JobServiceimpl extends BaseRepository implements  JobService  {
     }
 
     @Override
+    public List<Job> searchJob(SearchJobVM searchJobVM, Integer pageIndex, Integer pageSize) {
+        return jobRepoImpl.serchJob(searchJobVM, pageSize, pageIndex);
+    }
+
+    @Override
     public JobHomeDTO jobHome() {
         return null;
     }
 
-    @Override
-    public List<JobRegister> searchJob(Integer pageIndex, Integer pageSize) {
-        try {
-            String query = SqlReader.getSqlQueryById(SqlReader.ADMIN_MODULE_JOB, "searchjob");
-            Map<String, Object> parameters = new HashMap<>();
-            Integer p_startrow;
-            Integer p_endrow;
-            if(pageIndex==0)
-            {
-                p_startrow=pageSize*pageIndex;
-                p_endrow=p_startrow+pageSize;
-            }
-            else {
-                p_startrow=pageSize*pageIndex+1;
-                p_endrow=p_startrow+pageSize-1;
-            }
 
-            query += " ) tabWithRownum where tabWithRownum.ROWNR BETWEEN  :p_startrow and :p_endrow  ";
-            parameters.put("p_startrow", p_startrow);
-            parameters.put("p_endrow", p_endrow);
-return null;
-        //    return getNamedParameterJdbcTemplate().query(query, parameters, new JobMapper());
-        } catch (Exception ex) {
-            log.error(ex.getMessage(), ex);
-        }
-        return null;
-    }
 
     class JobMapper implements RowMapper<Job> {
         public Job mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -143,7 +126,8 @@ return null;
             dto.setDueDate(rs.getDate("due_date"));
             dto.setStartRecruitmentDate(rs.getDate("start_recruitment_date"));
             dto.setInterrest(rs.getString("interrest"));
-            dto.setSalary(rs.getInt("salary"));
+            dto.setSalaryMax(rs.getInt("salary_max"));
+            dto.setSalaryMin(rs.getInt("salary_min"));
             dto.setSkills(rs.getString("skills"));
             dto.setQtyPerson(rs.getInt("qty_person"));
             dto.setViews(rs.getInt("views"));
