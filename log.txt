@@ -61,3 +61,7 @@
 26-12-2021 10:48:16.619 [35m[http-nio-8080-exec-1][0;39m [34mINFO [0;39m org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/].log - Initializing Spring DispatcherServlet 'dispatcherServlet'
 26-12-2021 10:48:16.620 [35m[http-nio-8080-exec-1][0;39m [34mINFO [0;39m org.springframework.web.servlet.DispatcherServlet.initServletBean - Initializing Servlet 'dispatcherServlet'
 26-12-2021 10:48:16.622 [35m[http-nio-8080-exec-1][0;39m [34mINFO [0;39m org.springframework.web.servlet.DispatcherServlet.initServletBean - Completed initialization in 2 ms
+26-12-2021 15:31:36.444 [35m[HikariPool-1 housekeeper][0;39m [31mWARN [0;39m com.zaxxer.hikari.pool.HikariPool.run - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h56m43s907ms308µs189ns).
+26-12-2021 15:32:05.910 [35m[SpringApplicationShutdownHook][0;39m [34mINFO [0;39m org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.destroy - Closing JPA EntityManagerFactory for persistence unit 'default'
+26-12-2021 15:32:06.215 [35m[SpringApplicationShutdownHook][0;39m [34mINFO [0;39m com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown initiated...
+26-12-2021 15:32:06.980 [35m[SpringApplicationShutdownHook][0;39m [34mINFO [0;39m com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown completed.
