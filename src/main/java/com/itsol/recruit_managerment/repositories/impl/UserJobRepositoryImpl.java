@@ -45,7 +45,7 @@ public class UserJobRepositoryImpl extends BaseRepository implements UserJobRepo
 
             if (modJob == ModJob.HIGHT_SALARY.getValue()) {
                 int salaryCompare = CommonConst.HIGHT_SALARY_VALUE;
-                query += " and JOBs.salary >= :p_salary_compare";
+                query += " and JOBs.salary_max >= :p_salary_compare";
                 parameters.put("p_salary_compare", 18000000);
             }
 
