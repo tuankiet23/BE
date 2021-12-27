@@ -5,8 +5,10 @@ import com.itsol.recruit_managerment.model.JobRegister;
 import com.itsol.recruit_managerment.model.User;
 import com.itsol.recruit_managerment.vm.JobRegisterVM;
 import com.itsol.recruit_managerment.vm.SearchJobRegisterVM;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface JobRegisterService {
@@ -17,6 +19,7 @@ public interface JobRegisterService {
     AdminJobRegisterDTO getJobRegisterById(Long id);
     List<JobRegister> getAllJR();
     JobRegister getDetailJR(Long id);
-    Object download(String fileName) ;
     List<JobRegister> searchJobRegister(SearchJobRegisterVM searchJobRegisterVM, Integer pageIndex, Integer pageSize);
+    Resource downloadCv(Long applicantId) throws IOException;
+    String getCvFileName(String cvFilePath);
 }

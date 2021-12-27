@@ -45,9 +45,9 @@ spring:
     username: ITSOLDEMO
     password: phamtuankiet
 
-    url: jdbc:oracle:thin:@localhost:1521:sa
-    username: ITSOLDEMO2
-    password: 123456
+#    url: jdbc:oracle:thin:@localhost:1521:sa
+#    username: ITSOLDEMO2
+#    password: 123456
 # =======
 #     url: jdbc:oracle:thin:@localhost:1521:qlsvitsol
 #     username: GIAP12345

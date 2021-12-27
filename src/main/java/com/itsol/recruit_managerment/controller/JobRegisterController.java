@@ -24,6 +24,7 @@ import java.util.List;
 
 import static java.nio.file.Paths.get;
 import static org.apache.tomcat.util.http.fileupload.FileUploadBase.CONTENT_DISPOSITION;
+import static org.apache.tomcat.util.http.fileupload.FileUploadBase.CONTENT_TYPE;
 
 @Slf4j
 @RestController
@@ -32,8 +33,7 @@ public class JobRegisterController {
     @Autowired
     JobRegisterService jobRegisterService;
 
-    public static final String DIRECTORY = System.getProperty("C:\\Users\\Admin\\Desktop\\dowload");
-    public static final String CONTENT_DISPOSITION = System.getProperty(".pdf");
+    public static final String DIRECTORY = System.getProperty("D:\\BE\\");
     @CrossOrigin
     @GetMapping("/{page}/{size}")
     public Page<JobRegister> getAllJobRegister(@PathVariable("page") Integer page, @PathVariable("size") Integer size) {
@@ -95,28 +95,15 @@ public class JobRegisterController {
         return jobRegisterService.searchJobRegister(searchJobRegisterVM, pageIndex, pageSize);
     }
 
-
-@GetMapping("/link/{id}")
-    public void downloadFiles(@PathVariable("id") Long id, HttpServletResponse response) throws IOException {
-    JobRegister jobRegister= jobRegisterService.getDetailJR(id);
-    String filename=jobRegister.getCv();
-    File file=new File(filename);
-    response.setContentType("application/octet-stream");
-
-    String headerKey ="CONTENT_DISPOSITION";
-    String headerValue="attachment; filename="+file.getName()+".pdf";
-    response.setHeader(headerKey, headerValue);
-    ServletOutputStream outputStream=response.getOutputStream();
-    BufferedInputStream inputStream =new BufferedInputStream(new FileInputStream(file));
-    byte[] buffer=new byte[8192];
-    int bytesRead =-1;
-    while ((bytesRead= inputStream.read(buffer))!=-1){
-        outputStream.write(buffer, 0, bytesRead);
+    @GetMapping("/download/{id}")
+    @CrossOrigin
+    public ResponseEntity<Resource> downloadApplicantCv(@PathVariable("id") Long id) throws Exception {
+        Resource resource = jobRegisterService.downloadCv(id);
+        Path path = resource.getFile()
+                .toPath();
+        String contentType="application/pdf";
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
     }
-    inputStream.close();
-    outputStream.close();
-    }
-
-
-
 }
