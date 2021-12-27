@@ -110,13 +110,13 @@ public class AdminController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> delete(@PathVariable Long id) {
+    public Boolean delete(@PathVariable Long id) {
         try {
             adminService.delete(id);
-            return ResponseEntity.ok().body("xóa thành công");
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.badRequest().body("failed to update user");
+            return false;
         }
     }
 }

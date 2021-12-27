@@ -1,26 +1,21 @@
 package com.itsol.recruit_managerment.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-
+@Entity(name = "job_register")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "job_register")
-@Getter
+@Builder
 public class JobRegister implements  Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "JOBREG_SEQ")
-    @SequenceGenerator(name = "JOBREG_SEQ", sequenceName = "JOBREG_SEQ", allocationSize = 1, initialValue = 1)
-    @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GEN_JOR_ID")
+    @SequenceGenerator(name = "GEN_JOR_ID", sequenceName = "JOBREG_SEQ", allocationSize = 1,initialValue = 1)
     private Long id;
 
     @ManyToOne

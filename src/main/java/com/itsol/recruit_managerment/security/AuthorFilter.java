@@ -48,6 +48,7 @@ public class AuthorFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken authenticationToken =
                         new UsernamePasswordAuthenticationToken(username, null, authorities);
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                SecurityContextHolder.getContext().getAuthentication().getName();
                 filterChain.doFilter(request, response);
             }catch (Exception e){
                 response.addHeader("error", e.getMessage());
