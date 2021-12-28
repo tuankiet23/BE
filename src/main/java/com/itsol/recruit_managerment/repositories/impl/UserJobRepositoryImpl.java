@@ -7,10 +7,13 @@ import com.itsol.recruit_managerment.repositories.jpa.StatusJobRepoJPA;
 import com.itsol.recruit_managerment.utils.CommonConst;
 import com.itsol.recruit_managerment.utils.ModJob;
 import com.itsol.recruit_managerment.utils.SqlReader;
+import com.itsol.recruit_managerment.vm.SearchJobVM;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.ObjectUtils;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -38,37 +41,73 @@ public class UserJobRepositoryImpl extends BaseRepository implements UserJobRepo
     @Autowired
     StatusJobRepoJPA statusJobRepoJPA;
     @Override
-    public List<Job> getListJobWithCondition(int modJob, int p_startrow, int p_endrow) {
+    public List<Job> getListJobWithCondition(int modJob, int pageNumber, int pageSize) {
         try {
+
             String query = SqlReader.getSqlQueryById(SqlReader.USER_HOME_MODULE, "list_job_home");
+
             Map<String, Object> parameters = new HashMap<>();
+            parameters.put("pageNumber", pageNumber);
+            parameters.put("pageSize", pageSize);
+            if (modJob == ModJob.DEAD_LINE.getValue()) {
+                query = SqlReader.getSqlQueryById(SqlReader.USER_HOME_MODULE, "list_job_dead_line");
+                Integer numberDay = CommonConst.DAY_OF_DEADLINE;
+                parameters.put("p_numberDay", numberDay);
+            }
 
             if (modJob == ModJob.HIGHT_SALARY.getValue()) {
                 int salaryCompare = CommonConst.HIGHT_SALARY_VALUE;
-                query += " and JOBs.salary_max >= :p_salary_compare";
+                query += " and tblJobs.salary_max >= :p_salary_compare";
                 parameters.put("p_salary_compare", 18000000);
             }
 
             if (modJob == ModJob.NEW_JOB.getValue()) {
                 Integer numberDate = CommonConst.DAY_OF_NEW_JOB;
-                query += "and (SYSDATE - JOBs.create_date) <=  :p_number_day";
+                query += "and (SYSDATE - tblJobs.create_date) <=  :p_number_day";
                 parameters.put("p_number_day", numberDate);
             }
 
-            if(p_startrow > 0 &&  p_endrow > 0){
-                query += " and ROWNUM BETWEEN :p_startrow AND :p_endrow";
-                parameters.put("p_startrow", p_startrow);
-                parameters.put("p_endrow", p_endrow);
+            if (modJob == ModJob.ALL.getValue()) {
+                query += "and 1=1 ";
             }
             return getNamedParameterJdbcTemplate().query(query, parameters, new JobMapper());
+
         } catch (Exception ex) {
             log.error(ex.getMessage(), ex);
         }
         return null;
     }
 
+    @Override
+    public List<Job> searchJobHomePage(SearchJobVM searchJobVM, int pageNumber, int pageSize) {
+        try{
+            String query = SqlReader.getSqlQueryById(SqlReader.USER_HOME_MODULE, "list_job_home");
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("pageNumber", pageNumber);
+            parameters.put("pageSize", pageSize);
+            if(ObjectUtils.isEmpty(searchJobVM.getJobName()) && ObjectUtils.isEmpty(searchJobVM.getNumberExperence())
+                    && ObjectUtils.isEmpty(searchJobVM.getJobPosition()) ){
+                return null;
+            }
+            if(!ObjectUtils.isEmpty(searchJobVM.getJobName()) ){
+                query += "and tblJobs.job_name like :p_job_name";
+                parameters.put("p_job_name", "%"+searchJobVM.getJobName()+"%");
+            }
+            if(!ObjectUtils.isEmpty(searchJobVM.getNumberExperence())){
+                query += " and tblJobs.number_experience like :p_number_experience";
+                parameters.put("p_number_experience", searchJobVM.getNumberExperence());
+            }
+            if(!ObjectUtils.isEmpty(searchJobVM.getJobPosition())){
+                query += " and tblJobs.job_position_id like :p_job_position ";
+                parameters.put("p_job_position", jobPositionRepo.findByName(searchJobVM.getJobPosition()).getId());
+            }
 
-
+            return getNamedParameterJdbcTemplate().query(query, parameters, new JobMapper());
+        } catch (Exception ex) {
+            log.error(ex.getMessage(), ex);
+        }
+            return null;
+    }
 
     class JobMapper implements RowMapper<Job> {
 
