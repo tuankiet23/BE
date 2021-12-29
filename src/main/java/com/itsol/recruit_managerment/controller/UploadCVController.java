@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-//@RequestMapping("/api/user")
+@RequestMapping("/api/user")
 public class UploadCVController {
 
     @Autowired

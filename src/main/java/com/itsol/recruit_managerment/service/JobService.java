@@ -25,7 +25,10 @@ public interface JobService {
 
 
     List<Job> getJobsWithCondition(int modJob, int startrow, int endrow);
+
     List<Job> searchJob(SearchJobVM searchJobVM, Integer pageIndex, Integer pageSize);
+
+    List<Job> searchJobHomePage(SearchJobVM searchJobVM, int pageNumber, int pageSize);
 
     JobHomeDTO jobHome();
 

@@ -18,4 +18,5 @@ public interface JobPositionRepo extends JpaRepository<JobPosition,Long> {
     @Query(value=" update JobPosition u set u.isDelete = 0 where u.id=:id")
     void delete(@Param("id") Long id);
 
+    JobPosition findByName(String name);
 }
