@@ -118,6 +118,12 @@ public class JobServiceimpl extends BaseRepository implements  JobService  {
     }
 
     @Override
+    public List<Job> searchJobHomePage(SearchJobVM searchJobVM, int pageNumber, int pageSize) {
+        return userJobRepository.searchJobHomePage(searchJobVM,pageNumber, pageSize);
+    }
+
+
+    @Override
     public JobHomeDTO jobHome() {
         return null;
     }

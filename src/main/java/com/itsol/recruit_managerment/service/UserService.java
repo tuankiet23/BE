@@ -2,9 +2,12 @@ package com.itsol.recruit_managerment.service;
 
 import com.itsol.recruit_managerment.dto.PasswordDTO;
 import com.itsol.recruit_managerment.dto.UserSignupDTO;
+import com.itsol.recruit_managerment.model.JobRegister;
 import com.itsol.recruit_managerment.model.OTP;
 import com.itsol.recruit_managerment.model.Role;
 import com.itsol.recruit_managerment.model.User;
+import com.itsol.recruit_managerment.vm.SearchJeVM;
+import com.itsol.recruit_managerment.vm.SearchJobRegisterVM;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.multipart.MultipartFile;
@@ -62,4 +65,5 @@ public interface UserService extends UserDetailsService {
     User store(MultipartFile file, Long id) throws IOException;
 
     User getFile(Long id);
+    List<User> searchJE(SearchJeVM searchJeVM, Integer pageIndex, Integer pageSize);
 }

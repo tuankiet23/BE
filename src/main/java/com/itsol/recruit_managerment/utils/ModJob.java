@@ -1,7 +1,7 @@
 package com.itsol.recruit_managerment.utils;
 
 public enum ModJob {
-    NEW_JOB(1), HIGHT_SALARY(2), DEAD_LINE(3);
+    NEW_JOB(1), HIGHT_SALARY(2), DEAD_LINE(3), ALL(4);
     private int value;
 
     ModJob(int value) {

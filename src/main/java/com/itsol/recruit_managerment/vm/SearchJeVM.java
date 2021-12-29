@@ -1,6 +1,5 @@
 package com.itsol.recruit_managerment.vm;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,13 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SearchJobVM {
-    String jobName;
+public class SearchJeVM {
+    String fullName;
+    String phoneNumber;
+    String email;
 
-    Integer salaryMin;
-    Integer salaryMax;
-// giap them
-    String numberExperence;
-    String jobPosition;
 
 }

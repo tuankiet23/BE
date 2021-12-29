@@ -103,4 +103,10 @@ public class JobController {
         return jobService.searchJob(searchJobVM, pageIndex, pageSize);
     }
 
+    @CrossOrigin
+    @PutMapping("/home-page/search")
+    public List<Job> getSearchJobHomePage(@RequestBody SearchJobVM searchJobVM, @RequestParam("page-number") int pageNumber, @RequestParam("page-size") int pageSize ) {
+        return jobService.searchJobHomePage(searchJobVM, pageNumber, pageSize);
+    }
+
 }

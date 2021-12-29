@@ -11,6 +11,7 @@ import com.itsol.recruit_managerment.repositories.RoleRepo;
 import com.itsol.recruit_managerment.service.AdminService;
 import com.itsol.recruit_managerment.service.UserService;
 import com.itsol.recruit_managerment.service.impl.UserServiceimpl;
+import com.itsol.recruit_managerment.vm.SearchJeVM;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,8 +20,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -46,11 +49,11 @@ public class AdminController {
 //            value = "/singupje",
 //            produces = "application/json",
 //            method = RequestMethod.POST)
-    public ResponseEntity<String> singupje(@RequestBody UserSignupDTO userSignupDTO) {
+    public Boolean singupje(@RequestBody UserSignupDTO userSignupDTO) {
         Role role = roleRepo.findByName("ROLE_JE");
         User user = userServiceimpl.createUser(userSignupDTO);
         if (ObjectUtils.isEmpty(user)) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return false;
 
         }
         Set<Role> roles = new HashSet<>();
@@ -68,7 +71,7 @@ public class AdminController {
         OTP otp = userService.generateOTP(user);
         String linkActive = accountActivationConfig.getActivateUrl() + user.getId();
         emailService.sendSimpleMessage(user.getEmail(), "Link active account", "<a href=\" " + linkActive + "\">Click vào đây để kích hoạt tài khoản</a>");
-        return ResponseEntity.ok().body("check email for OTP");
+        return true;
     }
 
     @GetMapping("/active/{id}")
@@ -108,6 +111,16 @@ public class AdminController {
             return ResponseEntity.badRequest().body("failed to update user");
         }
     }
+    @DeleteMapping("/active/{id}")
+    public Boolean active(@PathVariable Long id){
+        try {
+            adminService.activeAccount(id);
+            return true;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     @DeleteMapping("/delete/{id}")
     public Boolean delete(@PathVariable Long id) {
@@ -118,5 +131,9 @@ public class AdminController {
             e.printStackTrace();
             return false;
         }
+    }
+    @PutMapping("/search")
+    public List<User> search(@Valid @RequestBody SearchJeVM searchJeVM,@RequestParam Integer pageIndex, @RequestParam Integer pageSize){
+        return  userService.searchJE(searchJeVM,pageIndex, pageSize);
     }
 }
