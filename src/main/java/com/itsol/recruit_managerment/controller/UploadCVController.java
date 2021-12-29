@@ -23,7 +23,7 @@ public class UploadCVController {
     private UploadCVService uploadCVService;
 
     @PostMapping("/upload")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file
+    public ResponseEntity<ResponseMessage> uploadFile(MultipartFile file
     , @RequestParam("username") String username ,@RequestParam("jobid") long jobId )
     {
         String message = "";

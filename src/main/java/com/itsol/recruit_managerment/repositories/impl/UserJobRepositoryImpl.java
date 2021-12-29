@@ -90,7 +90,7 @@ public class UserJobRepositoryImpl extends BaseRepository implements UserJobRepo
             }
             if(!ObjectUtils.isEmpty(searchJobVM.getJobName()) ){
                 query += "and tblJobs.job_name like :p_job_name";
-                parameters.put("p_job_name", "%"+searchJobVM.getJobName()+"%");
+                parameters.put("p_job_name", "%"+searchJobVM.getJobName().trim()+"%");
             }
             if(!ObjectUtils.isEmpty(searchJobVM.getNumberExperence())){
                 query += " and tblJobs.number_experience like :p_number_experience";

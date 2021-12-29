@@ -237,7 +237,8 @@ public class JobRegisterimpl extends BaseRepository implements  JobRegisterServi
             }
             if(!ObjectUtils.isEmpty(jobRegisterVM.getDateinterview())){
                 SimpleDateFormat sdf = new SimpleDateFormat(DateTimeConstant.YYYYMMDDHH_FOMART);
-                Date dateinterview=  sdf.parse(jobRegisterVM.getDateinterview());
+                String dateiv=jobRegisterVM.getDateinterview()+":00";
+                Date dateinterview=  sdf.parse(dateiv);
                 jobRegister.setDateInterview(dateinterview);
             }
             if (!ObjectUtils.isEmpty(jobRegisterVM.getMethodinterview())){

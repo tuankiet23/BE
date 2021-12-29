@@ -99,3 +99,7 @@ application:
   active-account:
     active-url: "http://localhost:8080/active/"
 
+servlet:
+  multipart:
+    max-file-size: 15MB
+    max-request-size: 15MB

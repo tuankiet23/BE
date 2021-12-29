@@ -6,7 +6,7 @@ with count_job_success as (
                                                                             INNER JOIN Status_Job on Status_Job.id = Jobs.status_job_id
                         where
                             profile_status.name like 'SUCCESS' and job_register.is_delete =0 and jobs.is_delete = 0
-                            and Status_Job.status_name IN('APPROVED' ,'RECRUITING')
+                            and Status_Job.name IN('APPROVED' ,'RECRUITING')
                             and (jobs.due_date >= current_date) and (jobs.due_date - current_date) <= :p_numberDay
                         group by jobs.id ) temp on temp.id = jobs.id where temp.countJob < jobs.qty_person)
 SELECT *  FROM
