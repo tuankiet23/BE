@@ -142,21 +142,28 @@ public class UserController {
     }
 
     @PutMapping("/users/info/change-password")
-    public ResponseEntity<String> changePassword(@RequestParam String otpCode) {
+    public Boolean changePassword(@RequestParam String otpCode) {
         try {
             User user = userService.loadUserFromContext();
             OTP otp = userService.getOTPByUser(user);
             userService.verifyOTP(otp, otpCode);
             userService.changePassword(user);
-            return ResponseEntity.ok().body("Password change successfull");
+            return true;
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return false;
         }
     }
 
     @PutMapping("/fogotpass")
-    public ResponseEntity<String> fogotPassword(@RequestBody FogotPasswordVM fogotPasswordVM) {
-        return (ResponseEntity<String>) userService.sendFogotPasswordMail(fogotPasswordVM.getEmail());
+    public Boolean fogotPassword(@RequestBody FogotPasswordVM fogotPasswordVM) {
+        try{
+            userService.sendFogotPasswordMail(fogotPasswordVM.getEmail());
+            return true;
+
+        }catch (RuntimeException e){
+            return false;
+        }
+//        return (ResponseEntity<String>) userService.sendFogotPasswordMail(fogotPasswordVM.getEmail());
     }
 
     @GetMapping("/getProfile")

@@ -40,7 +40,6 @@ spring:
 #    username: GIAP12345
 #    password: 12345
 
-#    url: jdbc:oracle:thin:@localhost:1521:xe
 #    url: jdbc:oracle:thin:@localhost:1521:ORCL
 #    username: ITSOLDEMO
 #    password: phamtuankiet
@@ -49,11 +48,13 @@ spring:
     username: ITSOLDEMO2
     password: 123456
 
-
 #    url: jdbc:oracle:thin:@localhost:1521:sa
 #    username: ITSOLDEMO2
 #    password: 123456
 
+#    url: jdbc:oracle:thin:@localhost:1521:sa
+#    username: ITSOLDEMO2
+#    password: 123456
 
 # =======
 #     url: jdbc:oracle:thin:@localhost:1521:qlsvitsol
@@ -76,14 +77,15 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username:  cutetiger98.java@gmail.com
-    password: vkqingjddopedqbw
+    username: cutetiger98.java@gmail.com
+    password: loqvbnyusvcnqzkx
     properties:
       mail:
         smtp:
           auth: true
           starttls:
             enable: true
+
 logging:
   level:
     root: info

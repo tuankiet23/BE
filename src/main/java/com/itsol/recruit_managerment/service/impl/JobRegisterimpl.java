@@ -12,6 +12,7 @@ import com.itsol.recruit_managerment.repositories.IUserRespository;
 import com.itsol.recruit_managerment.repositories.JobRegisterRepo;
 import com.itsol.recruit_managerment.repositories.ProfileStatusRepo;
 import com.itsol.recruit_managerment.service.JobRegisterService;
+import com.itsol.recruit_managerment.utils.DataUtil;
 import com.itsol.recruit_managerment.utils.SqlReader;
 import com.itsol.recruit_managerment.vm.JobRegisterVM;
 import com.itsol.recruit_managerment.vm.SearchJobRegisterVM;
@@ -19,6 +20,8 @@ import com.itsol.recruit_managerment.repositories.jpa.JobRepoJPA;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,12 +29,18 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.itsol.recruit_managerment.constant.ContenEmailConstant.CONTENT;
 
 @Slf4j
 @Service
@@ -87,15 +96,22 @@ public class JobRegisterimpl extends BaseRepository implements  JobRegisterServi
             System.out.println(jobRegister);
             jobRegisterRepo.save(jobRegister);
             if(jobRegisterVM.getProfilestatus().compareTo("3")==0)
-
-                emailService.sendSimpleMessage(jobRegister.getUser().getEmail(),
-                        "Thư mời phỏng vấn",
-                        "abc");
+                sendEmail(jobRegister);
             return true;
         }catch (Exception e){
             log.error(e.getMessage(), e);
         }
         return false;
+    }
+    public void sendEmail(JobRegister jobRegister){
+        String Content = CONTENT;
+       Content= Content.replace("X", jobRegister.getUser().getFullName() );
+        Content= Content.replace("PTPV", jobRegister.getMethodInterview() );
+        Content= Content.replace("ABC", jobRegister.getJob().getJobName() );
+        Content= Content.replace("DD", jobRegister.getDateInterview().toString() );
+        emailService.sendSimpleMessage(jobRegister.getUser().getEmail(),
+                "Thư mời phỏng vấn",
+                Content);
     }
 
 
@@ -132,13 +148,9 @@ public class JobRegisterimpl extends BaseRepository implements  JobRegisterServi
 
 
     @Override
-    public Object download(String fileName)  {
-        return null;
-    }
-
-    @Override
     public List<JobRegister> searchJobRegister(SearchJobRegisterVM searchJobRegisterVM, Integer pageIndex, Integer pageSize) {
         try {
+
             String query = SqlReader.getSqlQueryById(SqlReader.ADMIN_MODULE, "search");
             Map<String, Object> parameters = new HashMap<>();
             if (!ObjectUtils.isEmpty(searchJobRegisterVM.getFullName())) {
@@ -184,6 +196,32 @@ public class JobRegisterimpl extends BaseRepository implements  JobRegisterServi
         return null;
     }
 
+
+    @Override
+    public Resource downloadCv(Long applicantId) throws IOException {
+        JobRegister jobRegister = jobRegisterRepo.getById(applicantId);
+        if (ObjectUtils.isEmpty(jobRegister)) {
+            throw new NullPointerException("Could not found applicant");
+        }
+        String cvFilePath = jobRegister.getCv();
+        Path file = Paths.get(cvFilePath);
+        Resource resource = new UrlResource(file.toUri());
+
+        if (!resource.exists() && !resource.isReadable()) {
+            throw new RuntimeException("Could not read the file!");
+        }
+        return resource;
+    }
+
+    @Override
+    public String getCvFileName(String cvFilePath) {
+        if (!DataUtil.isNotNullAndEmptyString(cvFilePath)) {
+            throw new NullPointerException("CV file path is null");
+        }
+        String[] cvFilePaths = cvFilePath.split("/");
+        return cvFilePaths[cvFilePaths.length - 1];
+    }
+
     public JobRegister convert(JobRegisterVM jobRegisterVM){
         try{
             JobRegister jobRegister;
@@ -195,6 +233,7 @@ public class JobRegisterimpl extends BaseRepository implements  JobRegisterServi
                 jobRegister.setProfileStatus(profileStatus);
             }
             if(jobRegisterVM.getDateinterview()!=""){
+                String replaceString = jobRegisterVM.getDateinterview().replace('T', ' ');
                 SimpleDateFormat sdf = new SimpleDateFormat(DateTimeConstant.YYYYMMDD_FOMART);
                 jobRegister.setDateInterview(sdf.parse(jobRegisterVM.getDateinterview()));
             }

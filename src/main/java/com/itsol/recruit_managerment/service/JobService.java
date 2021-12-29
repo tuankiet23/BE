@@ -6,6 +6,7 @@ import com.itsol.recruit_managerment.model.JobRegister;
 import com.itsol.recruit_managerment.utils.ModJob;
 import com.itsol.recruit_managerment.vm.JobVM;
 import com.itsol.recruit_managerment.vm.SearchJobRegisterVM;
+import com.itsol.recruit_managerment.vm.SearchJobVM;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -24,10 +25,8 @@ public interface JobService {
 
 
     List<Job> getJobsWithCondition(int modJob, int startrow, int endrow);
+    List<Job> searchJob(SearchJobVM searchJobVM, Integer pageIndex, Integer pageSize);
 
     JobHomeDTO jobHome();
 
-
-    //kiet
-    List<JobRegister> searchJob( Integer pageIndex, Integer pageSize);
 }

@@ -49,11 +49,11 @@ public class AdminController {
 //            value = "/singupje",
 //            produces = "application/json",
 //            method = RequestMethod.POST)
-    public ResponseEntity<String> singupje(@RequestBody UserSignupDTO userSignupDTO) {
+    public Boolean singupje(@RequestBody UserSignupDTO userSignupDTO) {
         Role role = roleRepo.findByName("ROLE_JE");
         User user = userServiceimpl.createUser(userSignupDTO);
         if (ObjectUtils.isEmpty(user)) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return false;
 
         }
         Set<Role> roles = new HashSet<>();
@@ -71,7 +71,7 @@ public class AdminController {
         OTP otp = userService.generateOTP(user);
         String linkActive = accountActivationConfig.getActivateUrl() + user.getId();
         emailService.sendSimpleMessage(user.getEmail(), "Link active account", "<a href=\" " + linkActive + "\">Click vào đây để kích hoạt tài khoản</a>");
-        return ResponseEntity.ok().body("check email for OTP");
+        return true;
     }
 
     @GetMapping("/active/{id}")

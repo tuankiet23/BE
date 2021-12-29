@@ -336,6 +336,7 @@ public class UserServiceimpl extends BaseRepository implements UserService  {
     class JeMapper implements RowMapper<User> {
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             User dto = new User();
+            dto.setId(rs.getLong("id"));
             dto.setFullName(rs.getString("full_name"));
             dto.setUserName(rs.getString("user_name"));
             dto.setBirthDay(rs.getDate("birth_day"));
@@ -357,16 +358,17 @@ public class UserServiceimpl extends BaseRepository implements UserService  {
             String query = SqlReader.getSqlQueryById(SqlReader.ADMIN_SEARCH_JE, "search_je");
             Map<String, Object> parameters = new HashMap<>();
             if (!ObjectUtils.isEmpty(searchJeVM.getFullName())) {
-                query += " and users.full_name like %:p_name%";
-                parameters.put("p_name", searchJeVM.getFullName());
+                String fullname = searchJeVM.getFullName().toUpperCase();
+                query += " and UPPER( users.full_name)  like :p_name";
+                parameters.put("p_name", "%"+fullname+"%");
             }
             if (!ObjectUtils.isEmpty(searchJeVM.getPhoneNumber())) {
                 query += " and users.phone_number like :p_phone_number";
-                parameters.put("p_phone_number", searchJeVM.getPhoneNumber());
+                parameters.put("p_phone_number", "%"+searchJeVM.getPhoneNumber()+"%");
             }
             if (!ObjectUtils.isEmpty(searchJeVM.getEmail())) {
                 query += " and users.email like :p_email";
-                parameters.put("p_email", searchJeVM.getEmail());
+                parameters.put("p_email", "%"+searchJeVM.getEmail()+"%");
             }
 
             Integer p_startrow;
@@ -381,7 +383,7 @@ public class UserServiceimpl extends BaseRepository implements UserService  {
                 p_endrow=p_startrow+pageSize-1;
             }
 
-            query += " and row_num BETWEEN  :p_startrow and :p_endrow";
+            query += " )tabWithRownum where tabWithRownum.ROWNR BETWEEN  :p_startrow and :p_endrow";
             parameters.put("p_startrow", p_startrow);
             parameters.put("p_endrow", p_endrow);
 
