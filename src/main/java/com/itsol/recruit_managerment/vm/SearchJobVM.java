@@ -10,4 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SearchJobVM {
     String jobName;
+    Integer salaryMin;
+    Integer salaryMax;
 }

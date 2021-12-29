@@ -2,13 +2,13 @@ package com.itsol.recruit_managerment.controller;
 
 import com.itsol.recruit_managerment.model.Job;
 import com.itsol.recruit_managerment.service.JobService;
-import com.itsol.recruit_managerment.vm.SearchJobRegisterVM;
 import com.itsol.recruit_managerment.vm.SearchJobVM;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user/job")
@@ -88,13 +88,16 @@ public class JobController {
         return jobService.getJobsWithCondition(modJob, startrow, endrow);
     }
 
-    @CrossOrigin
     @GetMapping()
     public List<Job> getJob() {
         return jobService.getAllJob();
     }
 
-    @CrossOrigin
+    @GetMapping("detail/{id}")
+    public Optional<Job> getJobAd(@PathVariable("id") Long id) {
+        return jobService.getJobAd(id);
+    }
+
     @PutMapping("search")
     public List<Job> getSearchJob(@Valid @RequestBody SearchJobVM searchJobVM, @RequestParam Integer pageSize, @RequestParam Integer pageIndex ) {
         return jobService.searchJob(searchJobVM, pageIndex, pageSize);

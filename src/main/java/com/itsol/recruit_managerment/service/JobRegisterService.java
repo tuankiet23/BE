@@ -1,6 +1,7 @@
 package com.itsol.recruit_managerment.service;
 
 import com.itsol.recruit_managerment.dto.AdminJobRegisterDTO;
+import com.itsol.recruit_managerment.dto.JobRegisterDTO;
 import com.itsol.recruit_managerment.model.JobRegister;
 import com.itsol.recruit_managerment.model.User;
 import com.itsol.recruit_managerment.vm.JobRegisterVM;
@@ -19,7 +20,7 @@ public interface JobRegisterService {
     AdminJobRegisterDTO getJobRegisterById(Long id);
     List<JobRegister> getAllJR();
     JobRegister getDetailJR(Long id);
-    List<JobRegister> searchJobRegister(SearchJobRegisterVM searchJobRegisterVM, Integer pageIndex, Integer pageSize);
+    List<JobRegisterDTO> searchJobRegister(SearchJobRegisterVM searchJobRegisterVM, Integer pageIndex, Integer pageSize);
     Resource downloadCv(Long applicantId) throws IOException;
     String getCvFileName(String cvFilePath);
 }

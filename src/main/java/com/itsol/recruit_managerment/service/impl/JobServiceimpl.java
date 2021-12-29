@@ -15,7 +15,6 @@ import com.itsol.recruit_managerment.repositories.jpa.StatusJobRepoJPA;
 import com.itsol.recruit_managerment.service.JobService;
 
 
-import com.itsol.recruit_managerment.utils.SqlReader;
 import com.itsol.recruit_managerment.vm.SearchJobVM;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,13 +23,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -78,6 +75,18 @@ public class JobServiceimpl extends BaseRepository implements  JobService  {
             return null;
         }
     }
+
+    @Override
+    public Optional<Job> getJobAd(Long id) {
+        try {
+            Optional<Job> job= jobRepo.findById(id);
+            return job;
+        }catch (Exception e){
+            log.error("failed get by id: " + id);
+            return null;
+        }
+    }
+
 
     @Override
     public List<Job> getListNewJobs(Integer numberDate, Integer page, Integer size) {
