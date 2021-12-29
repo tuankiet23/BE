@@ -27,7 +27,7 @@ public class AdminService {
             newUser.setPhoneNumber(userSignupDTO.getPhoneNumber());
             newUser.setFullName(userSignupDTO.getFullName());
             newUser.setUserName(userSignupDTO.getUserName());
-            newUser.setActive(true);
+//            newUser.setActive(true);
 //            newUser.setPassword(userSignupDTO.getPassword());
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             try {
@@ -38,6 +38,16 @@ public class AdminService {
             iUserRespository.save(newUser);
             return CommonConst.SUCCESS;
         } catch (Exception e) {
+            return CommonConst.ERROR;
+        }
+    }
+    public int activeAccount(Long id){
+        try {
+            User user = iUserRespository.getUserById(id);
+            user.setActive(true);
+            iUserRespository.save(user);
+            return CommonConst.SUCCESS;
+        }catch (Exception e){
             return CommonConst.ERROR;
         }
     }

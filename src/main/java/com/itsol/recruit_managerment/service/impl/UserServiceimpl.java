@@ -6,44 +6,49 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.itsol.recruit_managerment.dto.PasswordDTO;
 import com.itsol.recruit_managerment.dto.UserSignupDTO;
 import com.itsol.recruit_managerment.email.EmailServiceImpl;
-import com.itsol.recruit_managerment.model.OTP;
-import com.itsol.recruit_managerment.model.Role;
-import com.itsol.recruit_managerment.model.User;
+import com.itsol.recruit_managerment.model.*;
+import com.itsol.recruit_managerment.repositories.BaseRepository;
 import com.itsol.recruit_managerment.repositories.IUserRespository;
 import com.itsol.recruit_managerment.repositories.OTPRepo;
 import com.itsol.recruit_managerment.repositories.RoleRepo;
 import com.itsol.recruit_managerment.service.UserService;
 import com.itsol.recruit_managerment.utils.CommonConst;
+import com.itsol.recruit_managerment.utils.SqlReader;
+import com.itsol.recruit_managerment.vm.SearchJeVM;
+import com.itsol.recruit_managerment.vm.SearchJobRegisterVM;
 import com.itsol.recruit_managerment.vm.UserVM;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 import com.auth0.jwt.JWTVerifier;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Transactional
-public class UserServiceimpl implements UserService {
+@Slf4j
+public class UserServiceimpl extends BaseRepository implements UserService  {
     @Autowired
     RoleRepo roleRepo;
     @Autowired
@@ -328,8 +333,64 @@ public class UserServiceimpl implements UserService {
         return userRepo.save(user);
     }
 
+    class JeMapper implements RowMapper<User> {
+        public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+            User dto = new User();
+            dto.setId(rs.getLong("id"));
+            dto.setFullName(rs.getString("full_name"));
+            dto.setUserName(rs.getString("user_name"));
+            dto.setBirthDay(rs.getDate("birth_day"));
+            dto.setEmail(rs.getString("email"));
+            dto.setGender(rs.getString("gender"));
+            dto.setPhoneNumber(rs.getString("phone_number"));
+            dto.setActive(rs.getBoolean("is_active"));
+            return dto;
+        }
+    }
+
     @Override
     public User getFile(Long id) {
         return userRepo.findById(id).get();
+    }
+    @Override
+    public List<User> searchJE(SearchJeVM searchJeVM, Integer pageIndex, Integer pageSize) {
+        try {
+            String query = SqlReader.getSqlQueryById(SqlReader.ADMIN_SEARCH_JE, "search_je");
+            Map<String, Object> parameters = new HashMap<>();
+            if (!ObjectUtils.isEmpty(searchJeVM.getFullName())) {
+                String fullname = searchJeVM.getFullName().toUpperCase();
+                query += " and UPPER( users.full_name)  like :p_name";
+                parameters.put("p_name", "%"+fullname+"%");
+            }
+            if (!ObjectUtils.isEmpty(searchJeVM.getPhoneNumber())) {
+                query += " and users.phone_number like :p_phone_number";
+                parameters.put("p_phone_number", "%"+searchJeVM.getPhoneNumber()+"%");
+            }
+            if (!ObjectUtils.isEmpty(searchJeVM.getEmail())) {
+                query += " and users.email like :p_email";
+                parameters.put("p_email", "%"+searchJeVM.getEmail()+"%");
+            }
+
+            Integer p_startrow;
+            Integer p_endrow;
+            if(pageIndex==0)
+            {
+                p_startrow=pageSize*pageIndex;
+                p_endrow=p_startrow+pageSize;
+            }
+            else {
+                p_startrow=pageSize*pageIndex+1;
+                p_endrow=p_startrow+pageSize-1;
+            }
+
+            query += " )tabWithRownum where tabWithRownum.ROWNR BETWEEN  :p_startrow and :p_endrow";
+            parameters.put("p_startrow", p_startrow);
+            parameters.put("p_endrow", p_endrow);
+
+            return getNamedParameterJdbcTemplate().query(query, parameters, new UserServiceimpl.JeMapper());
+        } catch (Exception ex) {
+            log.error(ex.getMessage(), ex);
+        }
+        return null;
     }
 }

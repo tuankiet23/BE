@@ -15,6 +15,7 @@ public class SqlReader {
     public static final String ADMIN_MODULE = "admin/admin_jobregister";
     public static final String ADMIN_MODULE_JOB = "admin/admin_job";
     public static final String USER_HOME_MODULE = "user/home";
+    public static final String ADMIN_SEARCH_JE = "admin/admin_je";
 
 
     public static String getSqlQueryById(String module, String queryId) {

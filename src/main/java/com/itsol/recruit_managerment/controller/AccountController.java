@@ -48,11 +48,11 @@ public class AccountController {
     ServletContext application;
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody(required = false) UserSignupDTO userSignupDTO) {
+    public Boolean signup(@RequestBody(required = false) UserSignupDTO userSignupDTO) {
         Role role = roleRepo.findByName("ROLE_USER");
         User user = userServiceimpl.createUser(userSignupDTO);
         if (ObjectUtils.isEmpty(user)) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return false;
         }
         Set<Role> roles = new HashSet<>();
         roles.add(role);
@@ -71,7 +71,7 @@ public class AccountController {
         emailService.sendSimpleMessage(user.getEmail(),
                 "Link active account",
                 "<a href=\" " + linkActive + "\">Click vào đây để kích hoạt tài khoản</a>");
-        return ResponseEntity.ok().body("check email for OTP");
+        return true;
     }
 
     @GetMapping("/active/{id}")
