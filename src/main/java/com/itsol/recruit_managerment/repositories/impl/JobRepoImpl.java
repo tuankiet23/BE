@@ -9,6 +9,7 @@ import com.itsol.recruit_managerment.service.impl.JobServiceimpl;
 import com.itsol.recruit_managerment.utils.BaseRepository;
 import com.itsol.recruit_managerment.utils.CommonConst;
 import com.itsol.recruit_managerment.utils.SqlReader;
+import com.itsol.recruit_managerment.vm.SearchJobVM;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.hibernate.type.IntegerType;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.ObjectUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -61,11 +63,26 @@ public class JobRepoImpl extends BaseRepository implements JobRepository {
         return result;
     }
 
-    @Override
-    public List<Job> serchJob(Object obj, Integer pageSize, Integer pageIndex) {
+    public List<Job> serchJob(SearchJobVM searchJobVM, Integer pageSize, Integer pageIndex) {
             try {
                 String query = SqlReader.getSqlQueryById(SqlReader.ADMIN_MODULE_JOB, "searchjob");
                 Map<String, Object> parameters = new HashMap<>();
+
+                if (!ObjectUtils.isEmpty(searchJobVM.getJobName())) {
+                    String jobName=searchJobVM.getJobName().toUpperCase();
+
+                    query += " and UPPER(jobs.job_name) like :p_job_name";
+                    parameters.put("p_job_name","%"+jobName+"%");
+                }
+                if (!ObjectUtils.isEmpty(searchJobVM.getSalaryMax())) {
+                    query += " and jobs.salary_max < :p_salary_max";
+                    parameters.put("p_salary_max",searchJobVM.getSalaryMax());
+                }
+                if (!ObjectUtils.isEmpty(searchJobVM.getSalaryMin())) {
+                    query += " and jobs.salary_min > :p_salary_min";
+                    parameters.put("p_salary_min",searchJobVM.getSalaryMin());
+                }
+
                 Integer p_startrow;
                 Integer p_endrow;
 

@@ -4,3 +4,4 @@ SELECT *  FROM
      WHERE Status_Job.status_name IN('APPROVED' ,'RECRUITING')  AND Jobs.is_delete = 0 and (current_date <= JOBs.due_date)
     ) tblJobs
 WHERE MyRowNumber BETWEEN ( ((:pageNumber - 1) * :pageSize )+ 1) AND :pageNumber*:pageSize
+

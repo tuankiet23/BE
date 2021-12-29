@@ -1,5 +1,6 @@
 package com.itsol.recruit_managerment.controller;
 import com.itsol.recruit_managerment.dto.AdminJobRegisterDTO;
+import com.itsol.recruit_managerment.dto.JobRegisterDTO;
 import com.itsol.recruit_managerment.model.JobRegister;
 import com.itsol.recruit_managerment.service.JobRegisterService;
 import com.itsol.recruit_managerment.vm.JobRegisterVM;
@@ -99,7 +100,7 @@ public class JobRegisterController {
 
     @CrossOrigin()
     @PutMapping("/search")
-    public List<JobRegister> search(@Valid @RequestBody SearchJobRegisterVM searchJobRegisterVM, @RequestParam Integer pageIndex, @RequestParam Integer pageSize){
+    public List<JobRegisterDTO> search(@Valid @RequestBody SearchJobRegisterVM searchJobRegisterVM, @RequestParam Integer pageIndex, @RequestParam Integer pageSize){
         return jobRegisterService.searchJobRegister(searchJobRegisterVM, pageIndex, pageSize);
     }
 

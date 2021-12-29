@@ -57,7 +57,9 @@ public class UserJobRepositoryImpl extends BaseRepository implements UserJobRepo
 
             if (modJob == ModJob.HIGHT_SALARY.getValue()) {
                 int salaryCompare = CommonConst.HIGHT_SALARY_VALUE;
+
                 query += " and tblJobs.salary_max >= :p_salary_compare";
+
                 parameters.put("p_salary_compare", 18000000);
             }
 
@@ -67,9 +69,6 @@ public class UserJobRepositoryImpl extends BaseRepository implements UserJobRepo
                 parameters.put("p_number_day", numberDate);
             }
 
-            if (modJob == ModJob.ALL.getValue()) {
-                query += "and 1=1 ";
-            }
             return getNamedParameterJdbcTemplate().query(query, parameters, new JobMapper());
 
         } catch (Exception ex) {
